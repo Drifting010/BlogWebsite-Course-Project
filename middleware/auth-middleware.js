@@ -9,7 +9,7 @@ function addUserToLocals(req, res, next) { // display user info in handlebar
 }
 
 function verifyAuthenticated(req,res,next){ // user authentication
-    if(res.locals.user){
+    if(res.locals.user){ // if user found (i.e. authenticated), go to corresponding route handler
         next();
     } else{
         res.redirect("/login");
