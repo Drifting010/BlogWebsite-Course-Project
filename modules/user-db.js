@@ -1,4 +1,4 @@
-const users = [
+const users = [ // test data, which needs to be changed after build connection with database
     {
         id: 0,
         username: "user1",
