@@ -1,5 +1,5 @@
 
-const userDb = require("../modules/user-db.js")
+const userDb = require("../modules/user-dao.js")
 
 function addUserToLocals(req, res, next) { // display user info in handlebar
     const authToken = req.cookies.authToken; // get cookie storing the authToken
