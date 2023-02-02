@@ -13,4 +13,14 @@ router.get("/", verifyAuthenticated, async function (req, res) {
     res.render("home");
 });
 
+router.get("/login", function (req, res){
+    res.render("login");
+})
+
+router.get("/new-account", function (req, res){
+
+
+    res.render("new-account");
+})
+
 module.exports = router;
