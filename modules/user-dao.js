@@ -1,5 +1,5 @@
 const SQL = require("sql-template-strings");
-const dbPromise = require("./project-database.db");
+const dbPromise = require("./database.js");
 // const bcrypt = require('bcrypt'); // hashing and salting password
 
 /**
@@ -109,7 +109,7 @@ async function deleteUser(username) {
 // Export functions.
 module.exports = {
     createUser,
-    retrieveUserById,
+    retrieveUserByUsername,
     retrieveUserWithCredentials,
     retrieveUserWithAuthToken,
     retrieveAllUsers,
