@@ -14,11 +14,11 @@ DROP TABLE IF EXISTS likedarticles;
 
 CREATE TABLE users (
     username VARCHAR(20) not null primary key,
-    hashed_password VARCHAR(100),
-    salt VARCHAR(100),
-    avatar_id INTEGER,
-    first_name VARCHAR(255),
-    last_name VARCHAR(255),
+    pass VARCHAR(100),
+	authtoken VARCHAR(100),
+    avatar_id VARCHAR(30),
+    first_name VARCHAR(10),
+    last_name VARCHAR(10),
     date_of_birth DATE,
     description TEXT
 );
@@ -39,7 +39,7 @@ CREATE TABLE comments (
     upvote INTEGER,
     downvote INTEGER,
     parent_comment_id INTEGER,
-    username VARCHAR(30),
+    username VARCHAR(20),
     article_id INTEGER,
     FOREIGN KEY (parent_comment_id) REFERENCES comments (comment_id),
     FOREIGN KEY (username) REFERENCES users (username),
@@ -51,5 +51,5 @@ CREATE TABLE likedarticles (
     article_id INTEGER,
     PRIMARY KEY (username, article_id),
     FOREIGN KEY (username) REFERENCES users (username),
-    FOREIGN KEY (article_id) REFERENCES articles (Article_Id)
+    FOREIGN KEY (article_id) REFERENCES articles (article_id)
 );

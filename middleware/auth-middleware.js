@@ -1,9 +1,9 @@
 
-const userDb = require("../modules/user-db.js")
+const userDb = require("../modules/user-dao.js")
 
-function addUserToLocals(req, res, next) { // display user info in handlebar
+async function addUserToLocals(req, res, next) { // display user info in handlebar
     const authToken = req.cookies.authToken; // get cookie storing the authToken
-    const user = userDb.getUserWithAuthToken(authToken); // get the user
+    const user = await userDb.retrieveUserWithAuthToken(authToken); // get the user
     res.locals.user = user; // pass the user to home.handlebars to render
     next();
 }
