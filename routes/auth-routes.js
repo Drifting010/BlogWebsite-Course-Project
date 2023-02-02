@@ -27,7 +27,7 @@ router.post("/login", async function (req, res) {
     const password = req.query.password; 
 
     // Find a matching user in the database
-    const user = userDb.getUserWithCredentials(username, password); // get user from database
+    const user = await userDb.getUserWithCredentials(username, password); // get user from database
 
     if(user) { // user exists
         const authToken = uuid(); // generate authToken
@@ -73,10 +73,10 @@ router.post("/newAccount", async function (req, res) {
         await userDao.createUser(user);
         // rediret to /login 
         res.setToastMessage("Account created successfully!"); // include toast message in a new cookie
-        res.redirect("./login"); // redirect to login page
-    } catch (err) {
+        res.redirect("/login"); // redirect to login page
+    } catch (err) { // if unique constraint in SQL failed
         res.setToastMessage("username is already taken!");
-        res.redirect("./newAccount"); // redirect to account creation page
+        res.redirect("/newAccount"); // redirect to account creation page
     }
 });
 
