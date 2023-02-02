@@ -1,0 +1,83 @@
+<div class="container">
+
+    <h1>Update account details</h1>
+    <p>Leave any fields you'd like to remain unchanged blank</p>
+
+    <form action="./updateAccount" method="POST" class = "form">
+        <div class="flex-col mb">
+            <label for="txtUsername">Username:</label>
+            <input type="text" name="username" id="txtUsername" required>
+        </div>
+
+        <div class="flex-row mb" id="avatar">
+            <label for="avatar">Choose your avatar:</label>
+            <input type="radio" name="avatar" id="avatar" value="cat" required>
+            <img src="\images\cat.png" height="60px">
+
+            <input type="radio" name="avatar" id="avatar" value="dog" required>
+            <img src="\images\dog.png" height="60px">
+
+            <input type="radio" name="avatar" id="avatar" value="fox" required>
+            <img src="\images\fox.png" height="60px">
+
+            <input type="radio" name="avatar" id="avatar" value="gorilla" required>
+            <img src="\images\gorilla.png" height="60px">
+
+            <input type="radio" name="avatar" id="avatar" value="koala" required>
+            <img src="\images\koala.png" height="60px">
+
+            <input type="radio" name="avatar" id="avatar" value="rabbit" required>
+            <img src="\images\rabbit.png" height="60px">
+
+            <input type="radio" name="avatar" id="avatar" value="tiger" required>
+            <img src="\images\tiger.png" height="60px">
+        </div>
+
+        <div class="flex-col mb">
+            <label for="txtFirstName">First name:</label>
+            <input type="text" name="firstName" id="txtFirstName" required>
+        </div>
+
+        <div class="flex-col mb">
+            <label for="txtLastName">Last name:</label>
+            <input type="text" name="lastname" id="txtLastName" required>
+        </div>
+
+        <div class="flex-col mb">
+            <label for="dob">Date of birth:</label>
+            <input type="date" name="dob" id="dob" required>
+        </div>
+
+        <div class="flex-col mb">
+            <label for="description">Provide a short description of yourself:</label>
+            <input type="text" name="description" id="description" required>
+        </div>
+
+        <div class="flex-col mb">
+            <label for="txtPassword">Password:</label>
+            <input type="password" name="password" id="txtPassword" required>
+        </div>
+
+        <div class="flex-col mb">
+            <label for="txtPasswordConfirm">Confirm password:</label>
+            <input type="passwordConfirm" name="passwordConfirm" id="txtPasswordConfirm" required>
+        </div>
+
+
+        <div class="flex-row justify-sb align-center">
+            <button type="submit">Create account</button>
+        </div>
+    </form>
+</div>
+
+    <h2>Delete your account</h1>
+    <p>If you delete your account, all your articles and comments will also be deleted.</p>
+    <form action="./deleteAccount" method="POST" class = "form"></form>
+      <div class="flex-row justify-sb align-center">
+            <button type="submit">Delete my account</button>
+        </div>
+    </form>
+
+<div id="avatar-attribution">
+Avatar images by <a href="https://www.freepik.com/free-vector/animal-avatars-flat-design_772910.htm#query=avatar%20icon&position=3&from_view=keyword">Freepik</a>
+</div>
