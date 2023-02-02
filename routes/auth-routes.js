@@ -80,9 +80,11 @@ router.post("/newAccount", async function (req, res) {
         description: req.body.description
     };
 
+    console.log(user);
+
     try { // if username is unique
         // insert new user info into database
-        await userDao.createUser(user);
+        await userDb.createUser(user);
         // rediret to /login 
         res.setToastMessage("Account created successfully!"); // include toast message in a new cookie
         res.redirect("/login"); // redirect to login page
