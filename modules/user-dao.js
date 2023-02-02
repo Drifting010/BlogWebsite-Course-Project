@@ -1,5 +1,5 @@
 const SQL = require("sql-template-strings");
-const dbPromise = require("./database.js");
+const dbPromise = require("./project-database.db");
 
 /**
  * Inserts the given user into the database. Then, reads the ID which the database auto-assigned, and adds it
