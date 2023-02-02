@@ -62,10 +62,14 @@ router.get("/newAccount", function (req, res) {
 router.post("/newAccount", async function (req, res) {
     // JSON object for data storage
     const user = {
-        id: null,
         username: req.body.username,
-        password: req.body.password,
-        name: req.body.name
+        hashed_password: req.body.hashed_password,
+        salt: req.body.salt,
+        avatar_id: req.body.avatar_id,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        date_of_birth: req.body.date_of_birth,
+        description: req.body.description
     };
 
     try { // if username is unique
@@ -75,6 +79,8 @@ router.post("/newAccount", async function (req, res) {
         res.setToastMessage("Account created successfully!"); // include toast message in a new cookie
         res.redirect("/login"); // redirect to login page
     } catch (err) { // if unique constraint in SQL failed
+        
+        // NEED TO CHANGE THE CODE BELOW AFTER IMPLEMENTTING HOW TO CHECK USERNAME AT THE FRONT
         res.setToastMessage("username is already taken!");
         res.redirect("/newAccount"); // redirect to account creation page
     }
