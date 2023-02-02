@@ -9,12 +9,16 @@ const { v4: uuid } = require("uuid");
 const userDb = require("../modules/user-db.js");
 
 // router for login page display
-router.get("./login", function (req, res) {
-    res.render("login"); // ???NEED A login.handlebars file
+router.get("/login", function (req, res) {
+    if(res.locals.user){
+        res.redirect("/")
+    } else {
+        res.render("login"); // ???NEED A login.handlebars file
+    }
 });
 
 // router for "./login" data submission
-router.get("./login", function (req, res) {
+router.get("/login", async function (req, res) {
     const username = req.query.name; // ???INPUT TAG IN HTML FORM MUST SET ITS NAME ATTRIBUTE TO name
     const password = req.query.password; // ???SAME AS ABOVE
 
