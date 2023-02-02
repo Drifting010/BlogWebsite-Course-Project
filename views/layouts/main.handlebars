@@ -12,13 +12,13 @@
 {{!-- need to update nav bar logic. placeholders only --}}
 
     <div class="navBar flex-row align-center justify-sa">
-        {{#if authorised}}
-        <h2></h2>
+        {{#if user.username}}
+        <h2>{{user.username}}</h2>
         <p></p>
-        <a href="./login">Logout</a>
+        <a href="./logout">Logout</a>
         {{else}}
-        <h2>{{username}}</h2>
-        <p></p>
+        <h2></h2>
+        <p>{{authorised}}</p>
         <a href="./login">Login</a>
         {{/if}}
     </div>
