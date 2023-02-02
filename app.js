@@ -27,11 +27,15 @@ app.use(cookieParser());
 const path = require("path");
 app.use(express.static(path.join(__dirname, "public")));
 
-// Use the toaster middleware
+// Use the toaster middleware, auth middleware
 app.use(require("./middleware/toaster-middleware.js"));
+const {addUserToLocals} = require("./middleware/auth-middleware.js");
+app.use(addUserToLocals);
 
 // Setup routes
 app.use(require("./routes/application-routes.js"));
+app.use(require("./routes/auth-routes.js"));
+
 
 // Start the server running.
 app.listen(port, function () {
