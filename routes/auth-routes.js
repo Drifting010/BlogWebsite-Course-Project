@@ -2,6 +2,8 @@
 const express = require("express");
 const router = express.Router();
 
+// const bcrypt = require('bcrypt'); // hashing and salting password
+
 // Authentication
 const { v4: uuid } = require("uuid");
 
@@ -15,6 +17,8 @@ router.get("/login", function (req, res) {
         res.redirect("/")
     } else {
         res.render("login"); 
+
+        // TODO render articles page even if when not logged in
     }
 });
 
@@ -23,15 +27,19 @@ router.get("/login", function (req, res) {
 // in a cookie, and redirect to "/". Otherwise, redirect to "/login", with a "login failed" message.
 router.post("/login", async function (req, res) {
     // Get the username and password submitted in the form
-    const username = req.query.name; 
-    const password = req.query.password; 
+    const username = req.body.username; 
+    const password = req.body.password;
+
+    // const isValid = await bcrypt.compare(password, user.hashed_password);
+
 
     // Find a matching user in the database
-    const user = await userDb.getUserWithCredentials(username, password); // get user from database
+    const user = await userDb.retrieveUserWithCredentials(username, password); // get user from database
 
     if(user) { // user exists
         const authToken = uuid(); // generate authToken
         user.authToken = authToken; // attach this authToken to user
+        await userDb.updateUser(user); // update user's authToken for every login
         res.cookie("authToken", authToken); // save this authentication to a cookie
         res.locals.user = user; // pass data to handlebar with user variable
 
@@ -63,12 +71,12 @@ router.post("/newAccount", async function (req, res) {
     // JSON object for data storage
     const user = {
         username: req.body.username,
-        hashed_password: req.body.hashed_password,
-        salt: req.body.salt,
-        avatar_id: req.body.avatar_id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        date_of_birth: req.body.date_of_birth,
+        password: req.body.password,
+        authtoken: req.cookies.authToken,
+        avatar_id: req.body.avatar,
+        first_name: req.body.firstName,
+        last_name: req.body.lastname,
+        date_of_birth: req.body.dob,
         description: req.body.description
     };
 
@@ -79,7 +87,7 @@ router.post("/newAccount", async function (req, res) {
         res.setToastMessage("Account created successfully!"); // include toast message in a new cookie
         res.redirect("/login"); // redirect to login page
     } catch (err) { // if unique constraint in SQL failed
-        
+
         // NEED TO CHANGE THE CODE BELOW AFTER IMPLEMENTTING HOW TO CHECK USERNAME AT THE FRONT
         res.setToastMessage("username is already taken!");
         res.redirect("/newAccount"); // redirect to account creation page
