@@ -1,12 +1,14 @@
 <div class="container"></div>
 
-<h1>Kia Ora {{username}}!</h1>
+<h1>Kia Ora {{user.username}}!</h1>
 
 <p> Your profile details:</p>
 <ul>
-    {{#each allTestData}}
-    <li>{{this.stuff}}</li>
-    {{/each}}
+    <li>{{user.username}}</li>
+    <li>{{user.first_name}}</li>
+    <li>{{user.last_name}}</li>
+    <li>{{user.date_of_birth}}</li>
+    <li>{{user.description}}</li>
 </ul>
 
 
