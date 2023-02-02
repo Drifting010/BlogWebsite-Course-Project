@@ -10,11 +10,13 @@ const dbPromise = require("./project-database.db");
 async function createUser(user) {
     const db = await dbPromise;
 
-    const result = await db.run(SQL`
-        insert into users (username, password, name) values(${user.username}, ${user.password}, ${user.name})`);
+    // TODO hashing and salting user.password before insert into DB
+
+    await db.run(SQL`
+        insert into users (username, hashed_password, salt, avatar_id, first_name, last_name, date_of_birth,description) values(${user.username}, ${user.hashed_password}, ${user.salt}, ${user.avatar_id}, ${user.first_name}, ${user.last_name}, ${user.date_of_birth}, ${user.description})`);
 
     // Get the auto-generated ID value, and assign it back to the user object.
-    user.id = result.lastID;
+    // user.id = result.lastID;
 }
 
 /**
@@ -23,29 +25,29 @@ async function createUser(user) {
  * 
  * @param {number} id the id of the user to get.
  */
-async function retrieveUserById(id) {
+async function retrieveUserByUsername(username) {
     const db = await dbPromise;
 
     const user = await db.get(SQL`
         select * from users
-        where id = ${id}`);
+        where username = ${username}`);
 
     return user;
 }
 
 /**
- * Gets the user with the given username and password from the database.
+ * Gets the user with the given username and hashed_password from the database.
  * If there is no such user, undefined will be returned.
  * 
  * @param {string} username the user's username
- * @param {string} password the user's password
+ * @param {string} hashed_password the user's hashed_password
  */
-async function retrieveUserWithCredentials(username, password) {
+async function retrieveUserWithCredentials(username, hashed_password) {
     const db = await dbPromise;
 
     const user = await db.get(SQL`
         select * from users
-        where username = ${username} and password = ${password}`);
+        where username = ${username} and hashed_password = ${hashed_password}`);
 
     return user;
 }
@@ -87,7 +89,7 @@ async function updateUser(user) {
 
     await db.run(SQL`
         update users
-        set username = ${user.username}, password = ${user.password},
+        set username = ${user.username}, hashed_password = ${user.hashed_password},
             name = ${user.name}, authToken = ${user.authToken}
         where id = ${user.id}`);
 }
