@@ -4,10 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <title>Group 2 final project</title>
-    <link rel="stylesheet" href="./css/site.css">
+    <link rel="stylesheet" href="./app.css">
 </head>
 
 <body>
+
+{{!-- need to update nav bar logic. placeholders only --}}
+
+    <div class="navBar flex-row align-center justify-sa">
+        {{#if authorised}}
+        <h2></h2>
+        <p></p>
+        <a href="./login">Logout</a>
+        {{else}}
+        <h2>{{username}}</h2>
+        <p></p>
+        <a href="./login">Login</a>
+        {{/if}}
+    </div>
     {{{body}}}
 </body>
 

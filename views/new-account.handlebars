@@ -1,13 +1,13 @@
 <div class="container">
 
     <h1>New Account</h1>
-    <form action="./newAccount" method="POST">
+    <form action="./newAccount" method="POST" class = "form">
         <div class="flex-col mb">
             <label for="txtUsername">Username:</label>
             <input type="text" name="username" id="txtUsername" required>
         </div>
 
-        <div class="flex-col mb">
+        <div class="flex-row mb" id="avatar">
             <label for="avatar">Choose your avatar:</label>
             <input type="radio" name="avatar" id="avatar" value="cat" required>
             <img src="\images\cat.png" height="60px">
@@ -66,5 +66,8 @@
             <button type="submit">Create account</button>
         </div>
     </form>
+</div>
 
+<div id="avatar-attribution">
+Avatar images by <a href="https://www.freepik.com/free-vector/animal-avatars-flat-design_772910.htm#query=avatar%20icon&position=3&from_view=keyword">Freepik</a>
 </div>
