@@ -1,4 +1,7 @@
+
 window.addEventListener("load", function (event) {
+
+    let value = true; // record the result of usernamecheck() function as it only returns Promise object
 
     // hint display
     const usernameChecckDiv = this.document.querySelector("#usernamecheck");
@@ -8,10 +11,18 @@ window.addEventListener("load", function (event) {
     const username = document.querySelector("#txtUsername");
     const pwdOne = this.document.querySelector("#txtPassword");
     const pwdTwo = this.document.querySelector("#txtPasswordConfirm");
+    const form = this.document.querySelector("#formNewAccount");
 
     // Listen to specified elements
     username.addEventListener("blur", usernameCheck);
     pwdTwo.addEventListener("blur", pwdCheck);
+    form.addEventListener("submit", function (e) {
+        const result = formSubmitCheck();
+   
+        if (!result) {
+            e.preventDefault(); // stop form to submit
+        }
+    });
 
     // Function for username check
     async function usernameCheck() {
@@ -28,13 +39,13 @@ window.addEventListener("load", function (event) {
 
         if (flag) {
             usernameChecckDiv.innerText = "Username Check Passes!";
-            return true;
+            value = true;
         } else {
             usernameChecckDiv.innerText = "Username Already Taken!";
-            return false;
+            value = false;
         }
     }
-    
+
     // Function for password match check
     function pwdCheck() {
         if (pwdOne.value != '' && pwdOne.value == pwdTwo.value) {
@@ -46,4 +57,8 @@ window.addEventListener("load", function (event) {
         }
     }
 
+    // Function for form submit check
+    function formSubmitCheck() {
+        return value && pwdCheck();
+    }
 });

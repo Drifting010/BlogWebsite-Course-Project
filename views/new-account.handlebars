@@ -1,7 +1,7 @@
 <div class="container">
 
     <h1>New Account</h1>
-    <form action="./newAccount" method="POST" class = "form">
+    <form action="./newAccount" method="POST" class="form" id="formNewAccount">
         <div class="flex-col mb">
             <label for="txtUsername">Username:</label>
             <input type="text" name="username" id="txtUsername" required>
@@ -10,25 +10,25 @@
 
         <div class="flex-row mb" id="avatar">
             <label for="avatar">Choose your avatar:</label>
-            <input type="radio" name="avatar" id="avatar" value="cat" required>
+            <input type="radio" name="avatar" id="cat" value="cat" required>
             <img src="\images\cat.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="dog" required>
+            <input type="radio" name="avatar" id="dog" value="dog" required>
             <img src="\images\dog.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="fox" required>
+            <input type="radio" name="avatar" id="fox" value="fox" required>
             <img src="\images\fox.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="gorilla" required>
+            <input type="radio" name="avatar" id="gorilla" value="gorilla" required>
             <img src="\images\gorilla.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="koala" required>
+            <input type="radio" name="avatar" id="koala" value="koala" required>
             <img src="\images\koala.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="rabbit" required>
+            <input type="radio" name="avatar" id="rabbit" value="rabbit" required>
             <img src="\images\rabbit.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="tiger" required>
+            <input type="radio" name="avatar" id="tiger" value="tiger" required>
             <img src="\images\tiger.png" height="60px">
         </div>
 
@@ -65,11 +65,12 @@
 
 
         <div class="flex-row justify-sb align-center">
-            <button type="submit">Create account</button>
+            <button type="submit" id="submit-button">Create account</button>
         </div>
     </form>
 </div>
 
 <div id="avatar-attribution">
-Avatar images by <a href="https://www.freepik.com/free-vector/animal-avatars-flat-design_772910.htm#query=avatar%20icon&position=3&from_view=keyword">Freepik</a>
+    Avatar images by <a
+        href="https://www.freepik.com/free-vector/animal-avatars-flat-design_772910.htm#query=avatar%20icon&position=3&from_view=keyword">Freepik</a>
 </div>
