@@ -80,8 +80,6 @@ router.post("/newAccount", async function (req, res) {
         description: req.body.description
     };
 
-    console.log(user);
-
     try { // if username is unique
         // insert new user info into database
         await userDb.createUser(user);
