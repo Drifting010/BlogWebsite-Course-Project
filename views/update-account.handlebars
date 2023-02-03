@@ -6,78 +6,70 @@
     <form action="./updateAccount" method="POST" class = "form">
         <div class="flex-col mb">
             <label for="txtUsername">Username:</label>
-            <input type="text" name="username" id="txtUsername" required>
+            <input type="text" name="username" id="txtUsername" value="{{user.username}}">
         </div>
 
         <div class="flex-row mb" id="avatar">
             <label for="avatar">Choose your avatar:</label>
-            <input type="radio" name="avatar" id="avatar" value="cat" required>
+            
+ {{!-- Add logic to check the avatar user has currently selected --}}
+            <input type="radio" name="avatar" id="avatar" value="cat" checked>
             <img src="\images\cat.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="dog" required>
+            <input type="radio" name="avatar" id="avatar" value="dog">
             <img src="\images\dog.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="fox" required>
+            <input type="radio" name="avatar" id="avatar" value="fox">
             <img src="\images\fox.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="gorilla" required>
+            <input type="radio" name="avatar" id="avatar" value="gorilla">
             <img src="\images\gorilla.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="koala" required>
+            <input type="radio" name="avatar" id="avatar" value="koala">
             <img src="\images\koala.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="rabbit" required>
+            <input type="radio" name="avatar" id="avatar" value="rabbit">
             <img src="\images\rabbit.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="tiger" required>
+            <input type="radio" name="avatar" id="avatar" value="tiger">
             <img src="\images\tiger.png" height="60px">
         </div>
 
         <div class="flex-col mb">
             <label for="txtFirstName">First name:</label>
-            <input type="text" name="firstName" id="txtFirstName" required>
+            <input type="text" name="firstName" id="txtFirstName" value="{{user.first_name}}">
         </div>
 
         <div class="flex-col mb">
             <label for="txtLastName">Last name:</label>
-            <input type="text" name="lastname" id="txtLastName" required>
+            <input type="text" name="lastname" id="txtLastName" value="{{user.last_name}}">
         </div>
 
         <div class="flex-col mb">
             <label for="dob">Date of birth:</label>
-            <input type="date" name="dob" id="dob" required>
+            <input type="date" name="dob" id="dob" value="{{user.date_of_birth}}">
         </div>
 
         <div class="flex-col mb">
             <label for="description">Provide a short description of yourself:</label>
-            <input type="text" name="description" id="description" required>
+            <input type="text" name="description" id="description" value="{{user.description}}">
         </div>
-
-        <div class="flex-col mb">
-            <label for="txtPassword">Password:</label>
-            <input type="password" name="password" id="txtPassword" required>
-        </div>
-
-        <div class="flex-col mb">
-            <label for="txtPasswordConfirm">Confirm password:</label>
-            <input type="passwordConfirm" name="passwordConfirm" id="txtPasswordConfirm" required>
-        </div>
-
 
         <div class="flex-row justify-sb align-center">
             <button type="submit">Create account</button>
         </div>
     </form>
-</div>
 
-    <h2>Delete your account</h1>
+    <h2>Delete your account</h2>
     <p>If you delete your account, all your articles and comments will also be deleted.</p>
     <form action="./deleteAccount" method="POST" class = "form"></form>
       <div class="flex-row justify-sb align-center">
             <button type="submit">Delete my account</button>
         </div>
     </form>
+    </div>
 
 <div id="avatar-attribution">
 Avatar images by <a href="https://www.freepik.com/free-vector/animal-avatars-flat-design_772910.htm#query=avatar%20icon&position=3&from_view=keyword">Freepik</a>
 </div>
+

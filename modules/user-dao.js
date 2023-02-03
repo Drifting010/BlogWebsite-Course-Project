@@ -84,14 +84,30 @@ async function retrieveAllUsers() {
  * 
  * @param user the user to update
  */
-async function updateUser(user) {
+async function updateUserToken(user) {
     const db = await dbPromise;
 
     await db.run(SQL`
         update users
         set username = ${user.username}, authToken = ${user.authToken}
         where username = ${user.username}`);
+
 }
+
+async function updateUserDetails(user) {
+    const db = await dbPromise;
+
+    await db.run(SQL`
+        update users
+        set username = ${user.username}, 
+        avatar_id = ${user.avatar_id},
+        first_name = ${user.first_name},
+        last_name = ${user.last_name},
+        date_of_birth = ${user.date_of_birth},
+        description = ${user.description}
+        where authtoken = ${user.authtoken}`);
+}
+
 
 /**
  * Deletes the user with the given id from the database.
@@ -113,6 +129,7 @@ module.exports = {
     retrieveUserWithCredentials,
     retrieveUserWithAuthToken,
     retrieveAllUsers,
-    updateUser,
-    deleteUser
+    updateUserToken,
+    deleteUser,
+    updateUserDetails
 };
