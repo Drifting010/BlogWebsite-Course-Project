@@ -112,7 +112,7 @@ router.post("/updateaccount", async function (req, res) {
         date_of_birth: req.body.dob,
         description: req.body.description
     };
-    userDb.updateUserDetails(user);
+    await userDb.updateUserDetails(user);
 });
 
 
