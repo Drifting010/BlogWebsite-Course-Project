@@ -13,10 +13,10 @@ const userDb = require("../modules/user-dao.js");
 // Whenever we navigate to /login, if we're already logged in, redirect to "/".
 // Otherwise, render the "login" view.
 router.get("/login", function (req, res) {
-    if(res.locals.user){
+    if (res.locals.user) {
         res.redirect("/")
     } else {
-        res.render("login"); 
+        res.render("login");
 
         // TODO render articles page even if when not logged in
     }
@@ -27,7 +27,7 @@ router.get("/login", function (req, res) {
 // in a cookie, and redirect to "/". Otherwise, redirect to "/login", with a "login failed" message.
 router.post("/login", async function (req, res) {
     // Get the username and password submitted in the form
-    const username = req.body.username; 
+    const username = req.body.username;
     const password = req.body.password;
 
     // const isValid = await bcrypt.compare(password, user.hashed_password);
@@ -36,7 +36,7 @@ router.post("/login", async function (req, res) {
     // Find a matching user in the database
     const user = await userDb.retrieveUserWithCredentials(username, password); // get user from database
 
-    if(user) { // user exists
+    if (user) { // user exists
         const authToken = uuid(); // generate authToken
         user.authToken = authToken; // attach this authToken to user
         await userDb.updateUser(user); // update user's authToken for every login
@@ -94,6 +94,12 @@ router.post("/newAccount", async function (req, res) {
         res.setToastMessage("username is already taken!");
         res.redirect("/newAccount"); // redirect to account creation page
     }
+});
+
+// router for usernamecheck, retrieve all users from DB and sent back to client-side
+router.get("/usenamecheck", async function (req, res) {
+    const users = await userDb.retrieveAllUsers();
+    res.json(users);
 });
 
 module.exports = router; // export all the routers in order to import them in the main application
