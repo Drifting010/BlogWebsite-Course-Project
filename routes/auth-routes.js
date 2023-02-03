@@ -32,10 +32,9 @@ router.post("/login", async function (req, res) {
 
     // const isValid = await bcrypt.compare(password, user.hashed_password);
 
-
     // Find a matching user in the database
     const user = await userDb.retrieveUserWithCredentials(username, password); // get user from database
-
+    
     if (user) { // user exists
         const authToken = uuid(); // generate authToken
         user.authToken = authToken; // attach this authToken to user
