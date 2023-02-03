@@ -39,7 +39,7 @@ router.post("/login", async function (req, res) {
     if (user) { // user exists
         const authToken = uuid(); // generate authToken
         user.authToken = authToken; // attach this authToken to user
-        await userDb.updateUser(user); // update user's authToken for every login
+        await userDb.updateUserToken(user); // update user's authToken for every login
         res.cookie("authToken", authToken); // save this authentication to a cookie
         res.locals.user = user; // pass data to handlebar with user variable
 
@@ -80,8 +80,6 @@ router.post("/newAccount", async function (req, res) {
         description: req.body.description
     };
 
-    console.log(user);
-
     try { // if username is unique
         // insert new user info into database
         await userDb.createUser(user);
@@ -95,6 +93,28 @@ router.post("/newAccount", async function (req, res) {
         res.redirect("/newAccount"); // redirect to account creation page
     }
 });
+
+
+router.get("/updateAccount", function (req, res) {
+
+    res.render("update-account");
+});
+
+router.post("/updateaccount", async function (req, res) {
+    // JSON object for data storage
+    const user = {
+        username: req.body.username,
+        password: req.body.password,
+        authtoken: req.cookies.authToken,
+        avatar_id: req.body.avatar,
+        first_name: req.body.firstName,
+        last_name: req.body.lastname,
+        date_of_birth: req.body.dob,
+        description: req.body.description
+    };
+    userDb.updateUserDetails(user);
+});
+
 
 // router for usernamecheck, retrieve all users from DB and sent back to client-side
 router.get("/usenamecheck", async function (req, res) {
