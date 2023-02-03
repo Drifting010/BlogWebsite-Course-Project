@@ -94,51 +94,10 @@ router.post("/newAccount", async function (req, res) {
     }
 });
 
+
 router.get("/updateAccount", function (req, res) {
 
     res.render("update-account");
-});
-
-
-router.post("/login", async function (req, res) {
-    // Get the username and password submitted in the form
-    const username = req.body.username;
-    const password = req.body.password;
-
-    // const isValid = await bcrypt.compare(password, user.hashed_password);
-
-
-    // Find a matching user in the database
-    const user = await userDb.retrieveUserWithCredentials(username, password); // get user from database
-
-    if (user) { // user exists
-        const authToken = uuid(); // generate authToken
-        user.authToken = authToken; // attach this authToken to user
-        await userDb.updateUserToken(user); // update user's authToken for every login
-        res.cookie("authToken", authToken); // save this authentication to a cookie
-        res.locals.user = user; // pass data to handlebar with user variable
-
-        res.redirect("/"); // ???Authentication passes: GO TO PERSONALISED HOME PAGE
-    } else { // undefined
-        res.locals.user = null;
-        res.setToastMessage("Authentication Failed!"); // create a cookie containing message as value; this is a function from toaster-middleware.js
-        res.redirect("/login"); // Authentication fails: go to login page
-    }
-});
-
-// Whenever we navigate to /logout, delete the authToken cookie.
-// redirect to "/login", supplying a "logged out successfully" message.
-router.get("/logout", function (req, res) {
-    res.clearCookie("authToken"); // Delete cookie storing the authToken of this session
-    res.locals.user = null;
-    res.setToastMessage("Successfully logged out!"); // store toast message in a new cookie
-    res.redirect("/login");
-});
-
-// Whenver we navigate to /newAccount, just render the new-account html page
-router.get("/newAccount", function (req, res) {
-
-    res.render("new-account");
 });
 
 router.post("/updateaccount", async function (req, res) {
@@ -153,10 +112,14 @@ router.post("/updateaccount", async function (req, res) {
         date_of_birth: req.body.dob,
         description: req.body.description
     };
-
-    console.log(user)
     userDb.updateUserDetails(user);
 });
 
+
+// router for usernamecheck, retrieve all users from DB and sent back to client-side
+router.get("/usenamecheck", async function (req, res) {
+    const users = await userDb.retrieveAllUsers();
+    res.json(users);
+});
 
 module.exports = router; // export all the routers in order to import them in the main application
