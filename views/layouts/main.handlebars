@@ -10,13 +10,14 @@
 
 <body>
 
-{{!-- need to update nav bar logic. placeholders only --}}
-
-    <div class="navBar flex-row align-center justify-sa">
+    <div class="flex-row align-center justify-sb" id="nav">
+        <h2>Group2</h2>
         {{#if user.username}}
-        <h2>{{user.username}}</h2>
-        <p></p>
-        <a href="./logout">Logout</a>
+        <div class="grid-3 align-center">
+        <p><img src="/images/{{user.avatar_id}}.png" height="50px"></p>
+        <h3>{{user.username}}</h3>
+        <p><a href="./logout">Logout</a></p>
+        </div>
         {{else}}
         <h2></h2>
         <p>{{authorised}}</p>

@@ -1,8 +1,7 @@
 // Express Router
 const express = require("express");
 const router = express.Router();
-
-// const bcrypt = require('bcrypt'); // hashing and salting password
+const bcrypt = require('bcrypt'); // hashing and salting password
 
 // Authentication
 const { v4: uuid } = require("uuid");
@@ -29,26 +28,40 @@ router.post("/login", async function (req, res) {
     // Get the username and password submitted in the form
     const username = req.body.username;
     const password = req.body.password;
-
-    // const isValid = await bcrypt.compare(password, user.hashed_password);
-
-
+    
     // Find a matching user in the database
-    const user = await userDb.retrieveUserWithCredentials(username, password); // get user from database
+    const user = await userDb.retrieveUserWithCredentials(username); // get user from database
+    
+    if (user) {
+        const isValid = await bcrypt.compare(password, user.pass);
 
-    if (user) { // user exists
-        const authToken = uuid(); // generate authToken
-        user.authToken = authToken; // attach this authToken to user
-        await userDb.updateUserToken(user); // update user's authToken for every login
-        res.cookie("authToken", authToken); // save this authentication to a cookie
-        res.locals.user = user; // pass data to handlebar with user variable
+        if (isValid) {
+            const authToken = uuid(); // generate authToken
+            user.authToken = authToken; // attach this authToken to user
+            await userDb.updateUserToken(user); // update user's authToken for every login
+            res.cookie("authToken", authToken); // save this authentication to a cookie
+            res.locals.user = user; // pass data to handlebar with user variable
+    
+            res.redirect("/"); // TODO Authentication passes: GO TO PERSONALISED HOME PAGE
+        } else { 
+            // TODO add useful error message
+            // const errorMessage = "Incorrect password, please try again.";
+            // res.locals.errorMessage = errorMessage;
 
-        res.redirect("/"); // ???Authentication passes: GO TO PERSONALISED HOME PAGE
-    } else { // undefined
+            res.locals.user = null;
+            res.setToastMessage("Authentication Failed!"); // create a cookie containing message as value; this is a function from toaster-middleware.js
+            res.redirect("/login"); // Authentication fails: go to login page
+        }
+    } else {
+        // TODO add useful error message
+        const errorMessage = "User does not exist. Please check your username or create an account."
+        res.locals.errorMessage = errorMessage;
+
         res.locals.user = null;
         res.setToastMessage("Authentication Failed!"); // create a cookie containing message as value; this is a function from toaster-middleware.js
         res.redirect("/login"); // Authentication fails: go to login page
     }
+    
 });
 
 // Whenever we navigate to /logout, delete the authToken cookie.
@@ -96,7 +109,6 @@ router.post("/newAccount", async function (req, res) {
 
 
 router.get("/updateAccount", function (req, res) {
-
     res.render("update-account");
 });
 
@@ -113,6 +125,8 @@ router.post("/updateaccount", async function (req, res) {
         description: req.body.description
     };
     userDb.updateUserDetails(user);
+
+    res.render("home");
 });
 
 
