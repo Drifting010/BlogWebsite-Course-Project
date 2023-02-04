@@ -1,7 +1,7 @@
 // Express Router
 const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcrypt'); // hashing and salting password
+const bcrypt = require('bcrypt'); 
 
 // Authentication
 const { v4: uuid } = require("uuid");
@@ -9,8 +9,7 @@ const { v4: uuid } = require("uuid");
 // Module
 const userDb = require("../modules/user-dao.js");
 
-// Whenever we navigate to /login, if we're already logged in, redirect to "/".
-// Otherwise, render the "login" view.
+
 router.get("/login", function (req, res) {
     if (res.locals.user) {
         res.redirect("/")
@@ -21,71 +20,62 @@ router.get("/login", function (req, res) {
     }
 });
 
-// Whenever we POST to /login, check the username and password submitted by the user.
-// If they match a user in the database, give that user an authToken, save the authToken
-// in a cookie, and redirect to "/". Otherwise, redirect to "/login", with a "login failed" message.
+
 router.post("/login", async function (req, res) {
-    // Get the username and password submitted in the form
     const username = req.body.username;
     const password = req.body.password;
     
-    // Find a matching user in the database
-    const user = await userDb.retrieveUserWithCredentials(username); // get user from database
+    const user = await userDb.retrieveUserWithCredentials(username); 
     
     if (user) {
         const isValid = await bcrypt.compare(password, user.pass);
 
         if (isValid) {
-            const authToken = uuid(); // generate authToken
-            user.authToken = authToken; // attach this authToken to user
-            await userDb.updateUserToken(user); // update user's authToken for every login
-            res.cookie("authToken", authToken); // save this authentication to a cookie
-            res.locals.user = user; // pass data to handlebar with user variable
+            const authToken = uuid(); 
+            user.authToken = authToken; 
+            await userDb.updateUserToken(user);
+            res.cookie("authToken", authToken); 
+            res.locals.user = user; 
     
-            res.redirect("/"); // TODO Authentication passes: GO TO PERSONALISED HOME PAGE
+            res.redirect("/"); 
+            
+            // TODO Authentication passes: GO TO PERSONALISED HOME PAGE
+
         } else { 
             // TODO add useful error message
-            // const errorMessage = "Incorrect password, please try again.";
-            // res.locals.errorMessage = errorMessage;
-
+            
             res.locals.user = null;
-            res.setToastMessage("Authentication Failed!"); // create a cookie containing message as value; this is a function from toaster-middleware.js
-            res.redirect("/login"); // Authentication fails: go to login page
+            res.setToastMessage("Authentication Failed!"); 
+            res.redirect("/login"); 
         }
     } else {
         // TODO add useful error message
-        const errorMessage = "User does not exist. Please check your username or create an account."
-        res.locals.errorMessage = errorMessage;
 
         res.locals.user = null;
-        res.setToastMessage("Authentication Failed!"); // create a cookie containing message as value; this is a function from toaster-middleware.js
-        res.redirect("/login"); // Authentication fails: go to login page
+        res.setToastMessage("Authentication Failed!"); 
+        res.redirect("/login"); 
     }
     
 });
 
-// Whenever we navigate to /logout, delete the authToken cookie.
-// redirect to "/login", supplying a "logged out successfully" message.
+
 router.get("/logout", function (req, res) {
-    res.clearCookie("authToken"); // Delete cookie storing the authToken of this session
+    res.clearCookie("authToken"); 
     res.locals.user = null;
-    res.setToastMessage("Successfully logged out!"); // store toast message in a new cookie
+    res.setToastMessage("Successfully logged out!"); 
     res.redirect("/login");
 });
 
-// Whenver we navigate to /newAccount, just render the new-account html page
-router.get("/newAccount", function (req, res) {
 
+router.get("/newAccount", function (req, res) {
     res.render("new-account");
 });
 
-// Whenver we POST to /newAccount, insert new user info into database
+
 router.post("/newAccount", async function (req, res) {
-    // JSON object for data storage
     const user = {
         username: req.body.username,
         password: req.body.password,
-        authtoken: req.cookies.authToken,
         avatar_id: req.body.avatar,
         first_name: req.body.firstName,
         last_name: req.body.lastname,
@@ -93,17 +83,14 @@ router.post("/newAccount", async function (req, res) {
         description: req.body.description
     };
 
-    try { // if username is unique
-        // insert new user info into database
+    try { 
         await userDb.createUser(user);
-        // rediret to /login 
-        res.setToastMessage("Account created successfully!"); // include toast message in a new cookie
-        res.redirect("/login"); // redirect to login page
-    } catch (err) { // if unique constraint in SQL failed
 
-        // NEED TO CHANGE THE CODE BELOW AFTER IMPLEMENTTING HOW TO CHECK USERNAME AT THE FRONT
+        res.setToastMessage("Account created successfully!"); 
+        res.redirect("/login"); 
+    } catch (err) { 
         res.setToastMessage("username is already taken!");
-        res.redirect("/newAccount"); // redirect to account creation page
+        res.redirect("/newAccount"); 
     }
 });
 
@@ -113,24 +100,25 @@ router.get("/updateAccount", function (req, res) {
 });
 
 router.post("/updateaccount", async function (req, res) {
-    // JSON object for data storage
+    const authToken = req.cookies.authToken;
+    const currentUser = await userDb.retrieveUserWithAuthToken(authToken);
+
     const user = {
+        user_id: currentUser.user_id,
         username: req.body.username,
-        password: req.body.password,
-        authtoken: req.cookies.authToken,
         avatar_id: req.body.avatar,
         first_name: req.body.firstName,
         last_name: req.body.lastname,
         date_of_birth: req.body.dob,
         description: req.body.description
     };
+   
     userDb.updateUserDetails(user);
 
-    res.render("home");
+    res.redirect("/");
 });
 
 
-// router for usernamecheck, retrieve all users from DB and sent back to client-side
 router.get("/usenamecheck", async function (req, res) {
     const users = await userDb.retrieveAllUsers();
     res.json(users);
@@ -140,17 +128,18 @@ router.get("/usenamecheck", async function (req, res) {
 router.get("/deleteaccount", async function (req, res) {
     const authToken = req.cookies.authToken;
     const user = await userDb.retrieveUserWithAuthToken(authToken);
-    console.log(user);
 
     try {
-        await userDb.deleteUser(user.username);
+        await userDb.deleteUser(user.user_id);
         res.clearCookie(authToken);
-        res.setToastMessage("Account is completely deleted");
+        res.setToastMessage("Account is deleted");
         res.redirect("/");
     } catch (error) {
         res.setToastMessage("Something went wrong!");
         res.redirect("/"); 
     }
+
+    //TODO add useful message to confirm account deletion for user
 });
 
 
