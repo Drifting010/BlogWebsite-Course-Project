@@ -1,0 +1,29 @@
+<script type="application/javascript" src="/tinymce/tinymce.min.js"></script>
+<script type="application/javascript" src="./my-tinymce-config.js"></script>
+
+<div class="container">
+    <h1>Create an article</h1>
+
+    <form action="./createarticle" method="POST" class="form" enctype="multipart/form-data">
+        <div class="flex-col mb">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="article-title" required>
+        </div>
+
+        <div class="flex-row justify-sb mb">
+            <label for="inpFile">Upload a cover photo (optional)</label>
+            {{!-- TODO filter input types on serverside --}}
+            <input id="inpFile" type="file" name="coverPhoto" accept=".png,.jpg,.jpeg,.bmp">
+        </div>
+        <br>
+
+        <textarea id="article-text"></textarea>
+        <br>
+
+        <div class="flex-row justify-sb align-center">
+            <button type="submit">Publish article</button>
+        </div>
+
+
+    </form>
+</div>

@@ -36,6 +36,13 @@ app.use(addUserToLocals);
 app.use(require("./routes/application-routes.js"));
 app.use(require("./routes/auth-routes.js"));
 
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
+const path = require("path");
+const multer = require("multer");
+const upload = multer({
+    dest: path.join(__dirname, "temp")
+});
 
 // Start the server running.
 app.listen(port, function () {
