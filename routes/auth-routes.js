@@ -12,11 +12,10 @@ const userDb = require("../modules/user-dao.js");
 
 router.get("/login", function (req, res) {
     if (res.locals.user) {
-        res.redirect("/")
+        res.redirect("/all-articles")
     } else {
         res.render("login");
 
-        // TODO render articles page even if when not logged in
     }
 });
 
