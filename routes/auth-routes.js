@@ -136,4 +136,23 @@ router.get("/usenamecheck", async function (req, res) {
     res.json(users);
 });
 
+
+router.get("/deleteaccount", async function (req, res) {
+    const authToken = req.cookies.authToken;
+    const user = await userDb.retrieveUserWithAuthToken(authToken);
+    console.log(user);
+
+    try {
+        await userDb.deleteUser(user.username);
+        res.clearCookie(authToken);
+        res.setToastMessage("Account is completely deleted");
+        res.redirect("/");
+    } catch (error) {
+        res.setToastMessage("Something went wrong!");
+        res.redirect("/"); 
+    }
+});
+
+
+
 module.exports = router; // export all the routers in order to import them in the main application
