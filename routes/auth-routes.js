@@ -111,7 +111,9 @@ router.post("/updateaccount", async function (req, res) {
         date_of_birth: req.body.dob,
         description: req.body.description
     };
+    
     await userDb.updateUserDetails(user);
+    res.redirect("/login"); // send reponse to client-side
 });
 
 

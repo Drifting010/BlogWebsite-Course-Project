@@ -3,7 +3,7 @@
     <h1>Update account details</h1>
     <p>Leave any fields you'd like to remain unchanged blank</p>
 
-    <form action="./updateAccount" method="POST" class = "form">
+    <form action="./updateAccount" method="POST" class="form">
         <div class="flex-col mb">
             <label for="txtUsername">Username:</label>
             <input type="text" name="username" id="txtUsername" value="{{user.username}}">
@@ -11,8 +11,8 @@
 
         <div class="flex-row mb" id="avatar">
             <label for="avatar">Choose your avatar:</label>
-            
- {{!-- Add logic to check the avatar user has currently selected --}}
+
+            {{!-- Add logic to check the avatar user has currently selected --}}
             <input type="radio" name="avatar" id="avatar" value="cat" checked>
             <img src="\images\cat.png" height="60px">
 
@@ -62,14 +62,14 @@
 
     <h2>Delete your account</h2>
     <p>If you delete your account, all your articles and comments will also be deleted.</p>
-    <form action="./deleteAccount" method="POST" class = "form"></form>
-      <div class="flex-row justify-sb align-center">
-            <button type="submit">Delete my account</button>
-        </div>
-    </form>
+    <form action="./deleteAccount" method="POST" class="form"></form>
+    <div class="flex-row justify-sb align-center">
+        <button type="submit">Delete my account</button>
     </div>
-
-<div id="avatar-attribution">
-Avatar images by <a href="https://www.freepik.com/free-vector/animal-avatars-flat-design_772910.htm#query=avatar%20icon&position=3&from_view=keyword">Freepik</a>
+    </form>
 </div>
 
+<div id="avatar-attribution">
+    Avatar images by <a
+        href="https://www.freepik.com/free-vector/animal-avatars-flat-design_772910.htm#query=avatar%20icon&position=3&from_view=keyword">Freepik</a>
+</div>
