@@ -33,28 +33,52 @@ router.post("/publish-article", function (req, res) {
     res.render("user-articles");
 });
 
-
-router.get("/articlesSortByTitle", function (req, res) {
-    const articles = articleDb.retrieveArticlesByTitle();
+// ALL ARTICLES SORTING
+router.get("/articles-all/title-az", function (req, res) {
+    const articles = articleDb.articlesByTitleAz();
 
     res.locals.articles = articles;
 });
 
-router.get("/articlesSortByUsername", function (req, res) {
-    const articles = articleDb.retrieveArticlesByUsername();
+router.get("/articles-all/title-za", function (req, res) {
+    const articles = articleDb.articlesByTitleZa();
+
+    res.locals.articles = articles;
+});
+
+router.get("/articles-all/username-az", function (req, res) {
+    const articles = articleDb.articlesByUsernameAz();
+
+    res.locals.articles = articles;
+});
+
+router.get("/articles-all/username-za", function (req, res) {
+    const articles = articleDb.articlesByUsernameZa();
 
     res.locals.articles = articles;
 });
 
 // default rendering
-router.get("/articlesSortByDate", function (req, res) {
-    const articles = articleDb.retrieveArticlesByDate();
+router.get("/articles-all/date-desc", function (req, res) {
+    const articles = articleDb.articlesByDateDesc();
 
     res.locals.articles = articles;
 });
 
+router.get("/articles-all/date-asc", function (req, res) {
+    const articles = articleDb.articlesByDateAsc();
+
+    res.locals.articles = articles;
+});
+
+
+// USER ARTICLES SORTING
+
+
+
 // title: a-z  z-a
 // default: desc by Date
-// 
+// date: asc & desc
+// username: asc & desc
 
 module.exports = router; 
