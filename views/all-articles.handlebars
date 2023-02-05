@@ -11,18 +11,19 @@
     <div class="dropdown">
         <button class="sort">Sort By</button>
     <div class="dropdown-content">
-    <a href="#">Link 1</a>
-    <a href="#">Link 2</a>
-    <a href="#">Link 3</a>
+    <a href="#">Title</a>
+    <a href="#">Name</a>
+    <a href="#">Date</a>
     </div>
     </div>
 </div>
 
-    {{#if user}}
-        {{#each userArticle}}
+    {{#if user}}       
         <div>
+            {{#each userArticle}}
             <h3>{{title}}</h3>
             <p>{{content}}</p>
+            {{/each}}
         </div>
     {{/if}}
 </div>
