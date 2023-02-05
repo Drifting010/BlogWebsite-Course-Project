@@ -1,0 +1,48 @@
+<div class="articlesContainer">
+    {{#each articles}}
+        {{!-- ARTICLE CONTENT PART --}}
+        <div class="article">
+            {{this.content}}
+        </div>
+
+        <div class="comment">
+            {{#each commentsSet.[{{@index}}]}}
+                {{this.content}}
+            {{/each}}
+        </div>
+
+
+
+        {{!-- COMMENT FUNCTIONALITY PART --}}
+        {{!-- if no user can be found, the whole comment part will not display --}}
+        {{#if user.username}}
+           
+                <button class="commentBtn">Comment</button>
+            
+        {{/if}}
+    {{/each}}
+</div>
+
+{{!-- EXISTING COMMENT CONTENT PART --}}
+{{!-- comments directely related to articles
+{{#if commentSetOne}}
+<ul>
+    {{#each commentSetOne}}
+    <li>{{this.content}}</li>
+    {{#if commentSetTWo}}
+    <ul>
+        {{#each commentSetTWo}}
+        <li>{{this.content}}</li>
+        {{#if commentSetThree}}
+        <ul>
+            {{#each commentSetThree}}
+            <li>{{this.content}}</li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        {{/each}}
+    </ul>
+    {{/if}}
+    {{/each}}
+</ul>
+{{/if}} --}}
