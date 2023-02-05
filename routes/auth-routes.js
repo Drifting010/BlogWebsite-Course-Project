@@ -99,11 +99,9 @@ router.get("/updateAccount", function (req, res) {
 });
 
 router.post("/updateaccount", async function (req, res) {
-    const authToken = req.cookies.authToken;
-    const currentUser = await userDb.retrieveUserWithAuthToken(authToken);
 
     const user = {
-        user_id: currentUser.user_id,
+        user_id: res.locals.user.user_id,
         username: req.body.username,
         avatar_id: req.body.avatar,
         first_name: req.body.firstName,
@@ -125,11 +123,9 @@ router.get("/usenamecheck", async function (req, res) {
 
 
 router.get("/deleteaccount", async function (req, res) {
-    const authToken = req.cookies.authToken;
-    const user = await userDb.retrieveUserWithAuthToken(authToken);
 
     try {
-        await userDb.deleteUser(user.user_id);
+        await userDb.deleteUser(res.locals.user.user_id,);
         res.clearCookie(authToken);
         res.setToastMessage("Account is deleted");
         res.redirect("/");
