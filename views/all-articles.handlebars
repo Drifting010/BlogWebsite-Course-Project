@@ -1,13 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Exercise One</title>
+    <link rel="stylesheet" href="./css/sort.css">
+</head>
+
 <div class="article-container">
-
-    <h1>Articles</h1>
-
+    <div class="dropdown">
+        <button class="sort">Sort By</button>
+    <div class="dropdown-content">
+    <a href="#">Link 1</a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+    </div>
+    </div>
 </div>
 
-<div>
-    <h3>{{article.name}}</h3>
+    {{#if user}}
+        {{#each userArticle}}
+        <div>
+            <h3>{{title}}</h3>
+            <p>{{content}}</p>
+        </div>
+    {{/if}}
 </div>
 
-<div>
-    {{article.content}}
-</div>
