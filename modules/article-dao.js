@@ -1,6 +1,5 @@
 const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
-const db = await dbPromise;
 
 async function getArticles() {
     const articleArray = await db.all(SQL`
@@ -15,6 +14,14 @@ async function getArticlesByUser(user) {
     where user_id = ${user.id}`)
     
     return userArticleArray;
+}
+
+async function getArticlesById(id) {
+    const article = await db.all(SQL`
+    select * from articles
+    where article_id = ${id}`)
+    
+    return article;
 }
 
 async function sortArticles(articles, order) {
@@ -69,8 +76,17 @@ async function sortArticles(articles, order) {
     }
 }
 
+async function createArticle(article) {
+    const db = await dbPromise;
+
+    await db.run(SQL`
+    insert into articles (title, content, user_id)  values (${article.title},${article.content}, ${article.user_id});`);
+}
+
 module.exports = {
     getArticles,
     getArticlesByUser,
-    sortArticles
+    sortArticles,
+    createArticle,
+    getArticlesById
 };
