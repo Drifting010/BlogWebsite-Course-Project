@@ -5,8 +5,9 @@ const articleDb = require("../modules/article-dao.js");
 
 
 router.get("/articles-all", async function (req, res) {
-    const articlesAll = await articleDb.getArticles;
+    const articlesAll = await articleDb.getArticles();
     res.locals.articles = articlesAll;
+    console.log(articlesAll);
     res.render("all-articles");
 });
 
@@ -20,7 +21,7 @@ router.get("/articles-user", async function (req, res) {
 });
 
 // router.post("/publish", upload.single("coverPhoto"), async function (req, res) {
-router.post("/publish-article", function (req, res) {
+router.post("/publish-article", async function (req, res) {
     const user = res.locals.user;
     const article = {
         title: req.body.title,
@@ -30,7 +31,10 @@ router.post("/publish-article", function (req, res) {
     };
     articleDb.createArticle(article);
 
-    res.render("user-articles");
+    const articles = await articleDb.getArticlesByUser(user);
+    
+    res.locals.articles = articles;
+    res.redirect("/articles-user");
 });
 
 // ALL ARTICLES SORTING
@@ -71,14 +75,5 @@ router.get("/articles-all/date-asc", function (req, res) {
     res.locals.articles = articles;
 });
 
-
-// USER ARTICLES SORTING
-
-
-
-// title: a-z  z-a
-// default: desc by Date
-// date: asc & desc
-// username: asc & desc
 
 module.exports = router; 

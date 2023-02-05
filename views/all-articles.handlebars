@@ -13,14 +13,15 @@
 </div>
 
 <div class="container" id="article-container">
+
     {{#each articles}}
     <div id="article">
-        <h3>{{articles.title}}</h3>
-        <input id = "{{articles.article_id}}" hidden>
-        <p>{{articles.content}}</p>
+        <h3>{{this.title}}</h3>
+        <input id = "{{this.article_id}}" hidden>
+        <p>{{{this.content}}}</p>
 
-        {{#if articles.image}}
-        <img src="{{articles.image}}" alt="">
+        {{#if this.image}}
+        <img src="{{this.image}}" alt="">
         {{/if}}
 
         <form action="./article-edit" method="POST">

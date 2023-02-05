@@ -2,6 +2,7 @@ const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
 
 async function getArticles() {
+    const db = await dbPromise;
     const articleArray = await db.all(SQL`
     select * from articles`)
 
@@ -9,14 +10,16 @@ async function getArticles() {
 }
 
 async function getArticlesByUser(user) {
+    const db = await dbPromise;
     const userArticleArray = await db.all(SQL`
     select * from articles
-    where user_id = ${user.id}`)
-    
+    where user_id = ${user.user_id}`)
+
     return userArticleArray;
 }
 
 async function getArticlesById(id) {
+    const db = await dbPromise;
     const article = await db.all(SQL`
     select * from articles
     where article_id = ${id}`)
@@ -24,57 +27,6 @@ async function getArticlesById(id) {
     return article;
 }
 
-async function sortArticles(articles, order) {
-    
-    
-    if (order = "oldest-first") {
-        articles.sort((a, b) => {
-            if (a.article_id < b.article_id) {
-                return -1;
-            }
-        })
-    } 
-    
-    if (order = "newest-first") {
-        articles.sort((a, b) => {
-            if (a.article_id > b.article_id) {
-                return 1;
-            }
-        })
-    } 
-    
-    if (order = "title-a-z") {
-        articles.sort((a, b) => {
-            if (a.title < b.title) {
-                return -1;
-            }
-        })
-    } 
-    
-    if (order = "title-z-a") {
-              articles.sort((a, b) => {
-            if (a.title > b.title) {
-                return 1;
-            }
-        })
-    }
-
-    if (order = "user-a-z") {
-        articles.sort((a, b) => {
-            if (a.user_id < b.user_id) {
-                return -1;
-            }
-        })
-    }
-
-    if (order = "user-z-a") {
-        articles.sort((a, b) => {
-            if (a.user_id > b.user_id) {
-                return 1;
-            }
-        })
-    }
-}
 
 async function createArticle(article) {
     const db = await dbPromise;
@@ -137,7 +89,6 @@ async function articlesByDateAsc(){
 module.exports = {
     getArticles,
     getArticlesByUser,
-    sortArticles,
     createArticle,
     getArticlesById,
     articlesByTitleZa,

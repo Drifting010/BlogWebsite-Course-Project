@@ -1,15 +1,7 @@
--- @Author: Hikaru Suzuki
--- @Created: 31/01/2023
--- @Modified: dd/mm/yyyy
-
-
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS articles;
-DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS likedarticles;
-
-
--- To create the tables (DDL)
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS articles;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users (
@@ -25,8 +17,9 @@ CREATE TABLE users (
 );
 
 CREATE TABLE articles (
-    article_id INTEGER not null primary key, 
+    article_id INTEGER not null primary key,
     title VARCHAR(255), 
+    created_datetime TIMESTAMP default CURRENT_TIMESTAMP,
     content TEXT, 
     image VARCHAR(255), 
     user_id INTEGER,
@@ -36,8 +29,7 @@ CREATE TABLE articles (
 CREATE TABLE comments (
     comment_id INTEGER not null primary key, 
     content TEXT,
-    created_datetime TIMESTAMP,
-    upvote INTEGER,
+    created_datetime TIMESTAMP default CURRENT_TIMESTAMP,
     downvote INTEGER,
     parent_comment_id INTEGER,
     user_id INTEGER,
