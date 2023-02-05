@@ -23,6 +23,7 @@ router.get("/articles", async function (req, res) {
         const comments = await commentDb.retrieveCommentsByArticleId(articles[i].article_id);
         commentsSet[i] = comments; // double array
     }
+    // console.log(commentsSet);
 
     res.locals.articles = articles;
     res.locals.commentsSet = commentsSet;

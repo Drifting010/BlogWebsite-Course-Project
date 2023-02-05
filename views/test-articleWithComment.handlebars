@@ -3,15 +3,21 @@
         {{!-- ARTICLE CONTENT PART --}}
         <div class="article">
             {{this.content}}
+            {{@index}}
+            {{!-- {{commentsSet.[1]}} --}}
         </div>
 
-        <div class="comment">
-            {{#each commentsSet.[{{@index}}]}}
+        {{!-- <div class="comment">
+            {{#each commentsSet}}
                 {{this.content}}
             {{/each}}
-        </div>
+        </div> --}}
 
+        {{!-- {{#each commentsSet}}
+        {{this.[0].content}}
+        {{/each}} --}}
 
+        {{!-- {{commentsSet.[0].[0].content}} --}}
 
         {{!-- COMMENT FUNCTIONALITY PART --}}
         {{!-- if no user can be found, the whole comment part will not display --}}
@@ -20,6 +26,11 @@
                 <button class="commentBtn">Comment</button>
             
         {{/if}}
+    {{/each}}
+
+    {{commentsSet.[0].[0].content}}
+    {{#each commentsSet}}
+        {{this.[0].content}}
     {{/each}}
 </div>
 
