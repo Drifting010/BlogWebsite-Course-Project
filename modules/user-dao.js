@@ -1,6 +1,6 @@
 const SQL = require("sql-template-strings");
 const dbPromise = require("./database.js");
-// const bcrypt = require('bcrypt'); // hashing and salting password
+const bcrypt = require('bcrypt'); 
 
 /**
  * Inserts the given user into the database. Then, reads the ID which the database auto-assigned, and adds it
@@ -10,13 +10,11 @@ const dbPromise = require("./database.js");
  */
 async function createUser(user) {
     const db = await dbPromise;
-
-    // TODO hashing and salting user.password before insert into DB
     
-    // const hash = await bcrypt.hash(user.password, 15);
+    const hash = await bcrypt.hash(user.password, 10);
 
     await db.run(SQL`
-        insert into users (username, pass, authtoken, avatar_id, first_name, last_name, date_of_birth,description) values(${user.username}, ${user.password}, ${user.authtoken}, ${user.avatar_id}, ${user.first_name}, ${user.last_name}, ${user.date_of_birth}, ${user.description})`);
+        insert into users (username, pass, avatar_id, first_name, last_name, date_of_birth,description) values(${user.username}, ${hash}, ${user.avatar_id}, ${user.first_name}, ${user.last_name}, ${user.date_of_birth}, ${user.description})`);
 }
 
 /**
@@ -25,12 +23,12 @@ async function createUser(user) {
  * 
  * @param {number} id the id of the user to get.
  */
-async function retrieveUserByUsername(username) {
+async function retrieveUserById(id) {
     const db = await dbPromise;
 
     const user = await db.get(SQL`
         select * from users
-        where username = ${username}`);
+        where user_id = ${id}`);
 
     return user;
 }
@@ -42,12 +40,12 @@ async function retrieveUserByUsername(username) {
  * @param {string} username the user's username
  * @param {string} hashed_password the user's hashed_password
  */
-async function retrieveUserWithCredentials(username, pass) {
+async function retrieveUserWithCredentials(username) {
     const db = await dbPromise;
 
     const user = await db.get(SQL`
         select * from users
-        where username = ${username} and pass = ${pass}`);
+        where username = ${username}`);
 
     return user;
 }
@@ -89,8 +87,8 @@ async function updateUserToken(user) {
 
     await db.run(SQL`
         update users
-        set username = ${user.username}, authToken = ${user.authToken}
-        where username = ${user.username}`);
+        set authToken = ${user.authToken}
+        where user_id = ${user.user_id}`);
 
 }
 
@@ -105,7 +103,7 @@ async function updateUserDetails(user) {
         last_name = ${user.last_name},
         date_of_birth = ${user.date_of_birth},
         description = ${user.description}
-        where authtoken = ${user.authtoken}`);
+        where user_id = ${user.user_id}`);
 }
 
 
@@ -114,18 +112,18 @@ async function updateUserDetails(user) {
  * 
  * @param {number} id the user's id
  */
-async function deleteUser(username) {
+async function deleteUser(id) {
     const db = await dbPromise;
 
     await db.run(SQL`
         delete from users
-        where username = ${username}`);
+        where user_id = ${id}`);
 }
 
 // Export functions.
 module.exports = {
     createUser,
-    retrieveUserByUsername,
+    retrieveUserById,
     retrieveUserWithCredentials,
     retrieveUserWithAuthToken,
     retrieveAllUsers,

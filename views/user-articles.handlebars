@@ -1,0 +1,38 @@
+<h1>Articles</h1>
+
+{{!-- sorting option --}}
+<div id="sortBy">
+    <form action="./articles-user-sort" method="POST">
+        <span>Sort by:</span>
+        <select name="order" id="sort-by">
+            <option value="newest-first" selected>Newest</option>
+            <option value="oldest-first">Oldest</option>
+            <option value="title-a-z">Title(A-Z)</option>
+            <option value="title-z-a">Title(Z-A)</option>
+            <option value="user-a-z">User(A-Z)</option>
+            <option value="user-z-a">User(Z-A)</option>
+        </select>
+    </form>
+</div>
+
+
+{{!-- user's articles --}}
+<div id="article-container"> 
+    {{#each articles}}
+        <div id="article">
+            <h3>TITLE: {{articles.title}}</h3>
+            <p>CONTENT: {{articles.content}}</p>
+
+            {{#if articles.image}}
+                <img src="{{articles.image}}" alt="">
+            {{/if}}      
+            
+            <form action="./edit-article" method="POST">
+                    <button type="submit">EDIT</button>
+            </form>
+            <form action="./delete-article" method="POST">
+                    <button type="submit">DELETE</button>
+            </form>
+        </div>
+    {{/each}}
+</div>
