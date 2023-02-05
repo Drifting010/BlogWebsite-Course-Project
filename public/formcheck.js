@@ -1,3 +1,4 @@
+
 window.addEventListener("load", function (event) {
 
     let value = true; // record the result of usernamecheck() function as it only returns Promise object

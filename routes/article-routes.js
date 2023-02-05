@@ -10,30 +10,10 @@ router.get("/articles-all", async function (req, res) {
     res.render("all-articles");
 });
 
-router.post("/articles-all-sort", async function (req, res) {
-    const articlesAll = await articleDb.getArticles;
-    const order = res.body.order;
-
-    await articleDb.sortArticles(articlesAll, order);
-
-    res.locals.articles = articles;
-    res.render("all-articles");
-});
 
 router.get("/articles-user", async function (req, res) {
     const user = res.locals.user;
     const articlesUser = await articleDb.getArticlesByUser(user);
-
-    res.locals.articles = articlesUser;
-    res.render("user-articles");
-});
-
-router.post("/articles-user", async function (req, res) {
-    const user = res.locals.user;
-    const articlesUser = await articleDb.getArticlesByUser(user);
-    const order = res.body.order;
-
-    await articleDb.sortArticles(articlesUser, order);
 
     res.locals.articles = articlesUser;
     res.render("user-articles");
@@ -54,6 +34,27 @@ router.post("/publish-article", function (req, res) {
 });
 
 
+router.get("/articlesSortByTitle", function (req, res) {
+    const articles = articleDb.retrieveArticlesByTitle();
 
+    res.locals.articles = articles;
+});
+
+router.get("/articlesSortByUsername", function (req, res) {
+    const articles = articleDb.retrieveArticlesByUsername();
+
+    res.locals.articles = articles;
+});
+
+// default rendering
+router.get("/articlesSortByDate", function (req, res) {
+    const articles = articleDb.retrieveArticlesByDate();
+
+    res.locals.articles = articles;
+});
+
+// title: a-z  z-a
+// default: desc by Date
+// 
 
 module.exports = router; 
