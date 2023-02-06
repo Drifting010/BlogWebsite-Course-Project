@@ -7,10 +7,12 @@
     font-family: 'Open Sans';
 }
 
-h1,
-h2,
-h3 {
-    font-weight: 'Comfortaa';
+h1 {
+    font-family: 'Comfortaa';
+}
+
+h5, h6 {
+    font-style: italic;
 }
 
 #avatar-attribution {
@@ -35,6 +37,17 @@ h3 {
     color:white;
     text-decoration: none;
 }
+
+.author {
+    color: #049faa;
+    font-family: 'Comfortaa';
+}
+
+.unlink {
+    color: black;
+    text-decoration: none;
+}
+
 /*****************************************************************/
 
 
@@ -42,7 +55,8 @@ h3 {
 
 /* Main page layout */
 /*****************************************************************/
-#nav {
+.nav {
+    font-family: 'Comfortaa';
     margin: 0px 30px;
 }
 

@@ -38,6 +38,7 @@ app.use(addUserToLocals);
 app.use(require("./routes/application-routes.js"));
 app.use(require("./routes/auth-routes.js"));
 app.use(require("./routes/article-routes.js"));
+app.use(require("./routes/comment-routes.js"));
 
 // Start the server running.
 app.listen(port, function () {

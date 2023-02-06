@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
     user_id INTEGER primary key not null,
-    username VARCHAR(20),
+    username VARCHAR(20) unique,
     pass VARCHAR(100),
 	authtoken VARCHAR(100),
     avatar_id VARCHAR(30),
@@ -23,7 +23,9 @@ CREATE TABLE articles (
     content TEXT, 
     image VARCHAR(255), 
     user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES users (user_id)
+    username VARCHAR(20),
+    FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (username) REFERENCES users (username)
 );
 
 CREATE TABLE comments (
@@ -33,9 +35,11 @@ CREATE TABLE comments (
     downvote INTEGER,
     parent_comment_id INTEGER,
     user_id INTEGER,
+    username VARCHAR(20),
     article_id INTEGER,
     FOREIGN KEY (parent_comment_id) REFERENCES comments (comment_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (article_id) REFERENCES articles (article_id)
 );
 
