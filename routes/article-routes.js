@@ -7,7 +7,7 @@ const articleDb = require("../modules/article-dao.js");
 router.get("/articles-all", async function (req, res) {
     const articlesAll = await articleDb.getArticles();
     res.locals.articles = articlesAll;
-    console.log(articlesAll);
+    // console.log(articlesAll);
     res.render("all-articles");
 });
 
@@ -37,42 +37,101 @@ router.post("/publish-article", async function (req, res) {
     res.redirect("/articles-user");
 });
 
+router.get("/create-article", function (req, res) {
+    res.render("create-article");
+});
+
 // ALL ARTICLES SORTING
-router.get("/articles-all/title-az", function (req, res) {
-    const articles = articleDb.articlesByTitleAz();
+router.get("/articles-all/title-az", async function (req, res) {
+    const articles = await articleDb.articlesByTitleAz();
 
     res.locals.articles = articles;
+    res.render("all-articles");
 });
 
-router.get("/articles-all/title-za", function (req, res) {
-    const articles = articleDb.articlesByTitleZa();
+router.get("/articles-all/title-za", async function (req, res) {
+    const articles = await articleDb.articlesByTitleZa();
 
     res.locals.articles = articles;
+    res.render("all-articles");
 });
 
-router.get("/articles-all/username-az", function (req, res) {
-    const articles = articleDb.articlesByUsernameAz();
+router.get("/articles-all/username-az", async function (req, res) {
+    const articles = await articleDb.articlesByUsernameAz();
 
     res.locals.articles = articles;
+    res.render("all-articles");
 });
 
-router.get("/articles-all/username-za", function (req, res) {
-    const articles = articleDb.articlesByUsernameZa();
+router.get("/articles-all/username-za", async function (req, res) {
+    const articles = await articleDb.articlesByUsernameZa();
 
     res.locals.articles = articles;
+    res.render("all-articles");
 });
 
 // default rendering
-router.get("/articles-all/date-desc", function (req, res) {
-    const articles = articleDb.articlesByDateDesc();
+router.get("/articles-all/date-desc", async function (req, res) {
+    const articles = await articleDb.articlesByDateDesc();
 
     res.locals.articles = articles;
+    res.render("all-articles");
 });
 
-router.get("/articles-all/date-asc", function (req, res) {
-    const articles = articleDb.articlesByDateAsc();
+router.get("/articles-all/date-asc", async function (req, res) {
+    const articles = await articleDb.articlesByDateAsc();
 
     res.locals.articles = articles;
+    res.render("all-articles");
+});
+
+// USER ARTICLES SORTING
+router.get("/articles-user/title-az", async function (req, res) {
+    const user = res.locals.user;
+    const articles = await articleDb.userArticlesByTitleAz(user);
+
+    res.locals.articles = articles;
+    res.render("user-articles");
+});
+
+router.get("/articles-user/title-za", async function (req, res) {
+    const user = res.locals.user;
+    const articles = await articleDb.userArticlesByTitleZa(user);
+
+    res.locals.articles = articles;
+    res.render("user-articles");
+});
+
+router.get("/articles-user/username-az", async function (req, res) {
+    const user = res.locals.user;
+    const articles = await articleDb.userArticlesByUsernameAz(user);
+
+    res.locals.articles = articles;
+    res.render("user-articles");
+});
+
+router.get("/articles-user/username-za", async function (req, res) {
+    const user = res.locals.user;
+    const articles = await articleDb.userArticlesByUsernameZa(user);
+
+    res.locals.articles = articles;
+    res.render("user-articles");
+});
+
+router.get("/articles-user/date-desc", async function (req, res) {
+    const user = res.locals.user;
+    const articles = await articleDb.userArticlesByDateDesc(user);
+
+    res.locals.articles = articles;
+    res.render("user-articles");
+});
+
+router.get("/articles-user/date-asc", async function (req, res) {
+    const user = res.locals.user;
+    const articles = await articleDb.userArticlesByDateAsc(user);
+
+    res.locals.articles = articles;
+    res.render("user-articles");
 });
 
 
