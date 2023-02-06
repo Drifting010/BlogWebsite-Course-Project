@@ -22,7 +22,6 @@
         <div class="article">
             <h2>{{this.title}}</h2>
             <h6> Written by <span class="author"> {{this.username}} </span>  on {{this.created_datetime}} </h6>
-            <input value="{{this.article_id}}" hidden>
             <p>{{{this.content}}}</p>
 
             {{#if this.image}}
@@ -31,10 +30,11 @@
 
             <div class="flex-row align-center justify-end mb">
                 <form action="./article-edit" method="POST">
-                    <button class="button" type="submit">Edit</button>
+                    <input type="hidden" class="editHidden" name="article_id">
+                    <button id="{{this.article_id}}" class="editArticleButton" type="submit">Edit</button>
                 </form>
                 <form action="./article-delete" method="POST">
-                    <button class="button" type="submit">Delete</button>
+                    <button id="{{this.article_id}}" class="deleteArticleButton" type="submit">Delete</button>
                 </form>
             </div>
         </div>

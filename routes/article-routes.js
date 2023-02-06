@@ -38,7 +38,7 @@ router.post("/publish-article", async function (req, res) {
     articleDb.createArticle(article);
 
     const articles = await articleDb.getArticlesByUser(user);
-    
+
     res.locals.articles = articles;
     res.redirect("/articles-user");
 });
@@ -46,6 +46,16 @@ router.post("/publish-article", async function (req, res) {
 router.get("/create-article", function (req, res) {
     res.render("create-article");
 });
+
+// Edit Articles
+router.post("/article-edit", async function (req, res) {
+    const article_id = req.body.article_id;
+    const article = await articleDb.getArticleById(article_id);
+    console.log(article);
+    // TODO: populate article in WYSIWYG editor
+
+});
+
 
 // ALL ARTICLES SORTING
 router.get("/articles-all-title-az", async function (req, res) {
@@ -140,5 +150,14 @@ router.get("/articles-user-date-asc", async function (req, res) {
     res.render("user-articles");
 });
 
+function makeArray(input) {
+    if (input === undefined) {
+        return [];
+    } else if (Array.isArray(input)) {
+        return input;
+    } else {
+        return [input];
+    }
+}
 
 module.exports = router; 

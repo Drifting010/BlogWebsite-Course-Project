@@ -18,9 +18,9 @@ async function getArticlesByUser(user) {
     return userArticleArray;
 }
 
-async function getArticlesById(id) {
+async function getArticleById(id) {
     const db = await dbPromise;
-    const article = await db.all(SQL`
+    const article = await db.get(SQL`
     select * from articles
     where article_id = ${id}`)
     
@@ -147,7 +147,7 @@ module.exports = {
     getArticles,
     getArticlesByUser,
     createArticle,
-    getArticlesById,
+    getArticleById,
     articlesByTitleZa,
     articlesByTitleAz,
     articlesByUsernameZa,
