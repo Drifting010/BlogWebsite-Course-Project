@@ -1,34 +1,42 @@
-<h1>Articles</h1>
+<div class="container">
+    <h1>Your articles</h1>
 
-<div class="dropdown">
-    <button class="dropbtn">Sort by:</button>
-    <div class="dropdown-content">
-        <a href="articles-user/date-desc">Date: Newest first</a>
-        <a href="articles-user/date-asc">Date: Oldest first</a>
-        <a href="articles-user/title-az">Title: A-Z</a>
-        <a href="articles-user/title-za">Title: Z-A</a>
-        <a href="articles-user/username-az">Author's username: A-Z</a>
-        <a href="articles-user/username-az">Author's username: Z-A</a>
+    <div class="flex-row align-center justify-end">
+        <div class="dropdown">
+            <button class="dropbtn">Sort articles by:</button>
+            <div class="dropdown-content">
+                <a href="articles-user/date-desc">Date: Newest first</a>
+                <a href="articles-user/date-asc">Date: Oldest first</a>
+                <a href="articles-user/title-az">Title: A-Z</a>
+                <a href="articles-user/title-za">Title: Z-A</a>
+                <a href="articles-user/username-az">Author's username: A-Z</a>
+                <a href="articles-user/username-az">Author's username: Z-A</a>
+            </div>
+        </div>
+        <button class="new-button"><a href="./createarticle">Create new article</a></button>
     </div>
-</div>
 
-<div class="container" id="article-container">
-    {{#each articles}}
-    <div id="article">
-        <h3>{{this.title}}</h3>
-        <input id = "{{this.article_id}}" hidden>
-        <p>{{this.content}}</p>
+    <div>
+        {{#each articles}}
+        <div class="article">
+            <h3>{{this.title}}</h3>
+            <input value="{{this.article_id}}" hidden>
+            <p>{{{this.content}}}</p>
 
-        {{#if this.image}}
-        <img src="{{this.image}}" alt="">
-        {{/if}}
+            {{#if this.image}}
+            <img src="{{this.image}}" alt="">
+            {{/if}}
 
-        <form action="./article-edit" method="POST">
-            <button type="submit">Edit</button>
-        </form>
-        <form action="./article-delete" method="POST">
-            <button type="submit">Delete</button>
-        </form>
+            <div class="flex-row align-center justify-end mb">
+                <form action="./article-edit" method="POST">
+                    <button class="button" type="submit">Edit</button>
+                </form>
+                <form action="./article-delete" method="POST">
+                    <button class="button" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+        {{/each}}
     </div>
-    {{/each}}
+
 </div>
