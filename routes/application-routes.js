@@ -13,8 +13,6 @@ router.get("/", verifyAuthenticated, async function (req, res) {
     res.render("home");
 });
 
-router.get("/createarticle", function (req, res) {
-    res.render("create-article");
-});
+
 
 module.exports = router;

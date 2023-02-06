@@ -75,13 +75,13 @@ async function articlesByUsernameAz(){
  */
 async function articlesByDateDesc(){
     const db = await dbPromise;
-    const articles = await db.all(SQL`select * from articles order by date desc`);
+    const articles = await db.all(SQL`select * from articles order by created_datetime desc`);
 
     return articles;
 }
 async function articlesByDateAsc(){
     const db = await dbPromise;
-    const articles = await db.all(SQL`select * from articles order by date`);
+    const articles = await db.all(SQL`select * from articles order by created_datetime`);
 
     return articles;
 }
