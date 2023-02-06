@@ -86,6 +86,63 @@ async function articlesByDateAsc(){
     return articles;
 }
 
+// USER ARTICLES SORTING
+/**
+ * retrieve articles ordered by its title from Database
+ */
+async function userArticlesByTitleZa(user){
+    const db = await dbPromise;
+    const articles = await db.all(SQL`
+        select * from articles where user_id=${user.user_id} order by title desc`);
+
+    return articles;
+}
+
+async function userArticlesByTitleAz(user){
+    const db = await dbPromise;
+    const articles = await db.all(SQL`
+        select * from articles where user_id=${user.user_id} order by title`);
+
+    return articles;
+}
+
+
+/**
+ * retrieve articles ordered by its title from Database
+ */
+async function userArticlesByUsernameZa(user){
+    const db = await dbPromise;
+    const articles = await db.all(SQL`
+        select * from articles where user_id=${user.user_id} order by username desc`);
+
+    return articles;
+}
+async function userArticlesByUsernameAz(user){
+    const db = await dbPromise;
+    const articles = await db.all(SQL`
+        select * from articles where user_id=${user.user_id} order by username`);
+
+    return articles;
+}
+
+/**
+ * retrieve articles ordered by its title from Database
+ */
+async function userArticlesByDateDesc(user){
+    const db = await dbPromise;
+    const articles = await db.all(SQL`
+        select * from articles where user_id=${user.user_id} order by created_datetime desc`);
+
+    return articles;
+}
+async function userArticlesByDateAsc(user){
+    const db = await dbPromise;
+    const articles = await db.all(SQL`
+        select * from articles where user_id=${user.user_id} order by created_datetime`);
+
+    return articles;
+}
+
 module.exports = {
     getArticles,
     getArticlesByUser,
@@ -96,5 +153,11 @@ module.exports = {
     articlesByUsernameZa,
     articlesByUsernameAz,
     articlesByDateDesc,
-    articlesByDateAsc
+    articlesByDateAsc,
+    userArticlesByTitleZa,
+    userArticlesByTitleAz,
+    userArticlesByUsernameZa,
+    userArticlesByUsernameAz,
+    userArticlesByDateDesc,
+    userArticlesByDateAsc
 };
