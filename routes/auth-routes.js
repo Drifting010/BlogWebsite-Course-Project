@@ -79,7 +79,7 @@ router.post("/newAccount", async function (req, res) {
         first_name: req.body.firstName,
         last_name: req.body.lastname,
         date_of_birth: req.body.dob,
-        description: req.body.description
+        description: req.body.description,
     };
 
     try { 
@@ -107,9 +107,10 @@ router.post("/updateaccount", async function (req, res) {
         first_name: req.body.firstName,
         last_name: req.body.lastname,
         date_of_birth: req.body.dob,
-        description: req.body.description
+        description: req.body.description,
+        password: req.body.password
     };
-   
+
     userDb.updateUserDetails(user);
 
     res.redirect("/");

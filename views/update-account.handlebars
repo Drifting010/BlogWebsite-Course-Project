@@ -54,6 +54,18 @@
             <input type="text" name="description" id="description" value="{{user.description}}">
         </div>
 
+        <div class="flex-col mb">
+            <label for="txtPassword">Password:</label>
+            <input type="password" name="password" id="txtPassword" placeholder="New Password">
+        </div>
+
+        <div class="flex-col mb">
+            <label for="txtPasswordConfirm">Confirm password:</label>
+            <input type="password" name="passwordConfirm" id="txtPasswordConfirm" placeholder="Confirm Password">
+            <div id="pwdcheck" style="display: inline"></div>
+        </div>
+
+        {{!-- TODO when having errors, button is "unable" --}}
         <div class="flex-row justify-sb align-center">
             <button type="submit">Update account</button>
         </div>
