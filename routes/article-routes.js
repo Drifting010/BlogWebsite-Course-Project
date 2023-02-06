@@ -51,7 +51,7 @@ router.get("/create-article", function (req, res) {
 router.post("/article-edit", async function (req, res) {
     const article_id = req.body.article_id;
     const article = await articleDb.getArticleById(article_id);
-    console.log(article);
+    // console.log(article);
     // TODO: populate article in WYSIWYG editor
 
 });
