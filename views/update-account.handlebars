@@ -1,11 +1,11 @@
 <div class="container">
 
     <h1>Update account details</h1>
-
-    <form action="./updateaccount" method="POST" class = "form">
+    <form action="./updateaccount" method="POST" id="form">
         <div class="flex-col mb">
             <label for="txtUsername">Username:</label>
             <input type="text" name="username" id="txtUsername" value="{{user.username}}">
+            <div id="usernamecheck" style="display: inline"></div>
         </div>
 
         <div class="flex-row mb" id="avatar">
@@ -56,18 +56,17 @@
 
         <div class="flex-col mb">
             <label for="txtPassword">Password:</label>
-            <input type="password" name="password" id="txtPassword" placeholder="New Password">
+            <input type="password" name="password" id="txtPassword" placeholder="***********">
         </div>
 
         <div class="flex-col mb">
             <label for="txtPasswordConfirm">Confirm password:</label>
-            <input type="password" name="passwordConfirm" id="txtPasswordConfirm" placeholder="Confirm Password">
+            <input type="password" name="passwordConfirm" id="txtPasswordConfirm" placeholder="***********">
             <div id="pwdcheck" style="display: inline"></div>
         </div>
 
-        {{!-- TODO when having errors, button is "unable" --}}
         <div class="flex-row justify-sb align-center">
-            <button type="submit">Update account</button>
+            <button type="submit" id="submit-button" disabled>Update account</button>
         </div>
     </form>
 

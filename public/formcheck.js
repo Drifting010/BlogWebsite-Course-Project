@@ -1,24 +1,24 @@
-
 window.addEventListener("load", function (event) {
 
     let value = true; // record the result of usernamecheck() function as it only returns Promise object
 
     // hint display
-    const usernameChecckDiv = this.document.querySelector("#usernamecheck");
+    const usernameCheckDiv = this.document.querySelector("#usernamecheck");
     const pwdCheckDiv = document.querySelector("#pwdcheck");
 
     // Elements from HTML
     const username = document.querySelector("#txtUsername");
-    const pwdOne = this.document.querySelector("#txtPassword");
-    const pwdTwo = this.document.querySelector("#txtPasswordConfirm");
-    const form = this.document.querySelector("#formNewAccount");
+    const pwdOne = document.querySelector("#txtPassword");
+    const pwdTwo = document.querySelector("#txtPasswordConfirm");
+    const form = document.querySelector("#formNewAccount");
+    const submitBtn = document.querySelector("#submit-button")
 
     // Listen to specified elements
     username.addEventListener("blur", usernameCheck);
     pwdTwo.addEventListener("blur", pwdCheck);
     form.addEventListener("submit", function (e) {
         const result = formSubmitCheck();
-   
+
         if (!result) {
             e.preventDefault(); // stop form to submit
         }
@@ -26,8 +26,8 @@ window.addEventListener("load", function (event) {
 
     // Function for username check
     async function usernameCheck() {
-        const reponse = await fetch("./usenamecheck");
-        const userJson = await reponse.json(); // an array of json objects
+        const response = await fetch("./usenamecheck");
+        const userJson = await response.json(); // an array of json objects
         let flag = true;
 
         for (let i = 0; i < userJson.length; i++) {
@@ -38,10 +38,12 @@ window.addEventListener("load", function (event) {
         }
 
         if (flag) {
-            usernameChecckDiv.innerText = "Username Check Passes!";
+            usernameCheckDiv.innerText = "Username Check Passes!";
+            submitBtn.removeAttribute("disabled", "");
             value = true;
         } else {
-            usernameChecckDiv.innerText = "Username Already Taken!";
+            usernameCheckDiv.innerText = "Username Already Taken!";
+            submitBtn.setAttribute("disabled", "");
             value = false;
         }
     }
@@ -50,15 +52,21 @@ window.addEventListener("load", function (event) {
     function pwdCheck() {
         if (pwdOne.value != '' && pwdOne.value == pwdTwo.value) {
             pwdCheckDiv.innerText = "Password Matches!";
+            submitBtn.removeAttribute("disabled", "");
             return true;
         } else {
             pwdCheckDiv.innerText = "Password Must Match!";
+            submitBtn.setAttribute("disabled", "");
             return false;
         }
     }
 
     // Function for form submit check
     function formSubmitCheck() {
+        if (value == true && pwdCheck() == true) {
+            submitBtn.removeAttribute("disabled", "");
+        }
         return value && pwdCheck();
     }
+
 });
