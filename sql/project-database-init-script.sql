@@ -35,9 +35,11 @@ CREATE TABLE comments (
     downvote INTEGER,
     parent_comment_id INTEGER,
     user_id INTEGER,
+    username VARCHAR(20),
     article_id INTEGER,
     FOREIGN KEY (parent_comment_id) REFERENCES comments (comment_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id),
+    FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (article_id) REFERENCES articles (article_id)
 );
 

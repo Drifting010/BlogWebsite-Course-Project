@@ -2,12 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 const articleDb = require("../modules/article-dao.js");
+const commentDb = require("../modules/comment-dao.js");
 
 
 router.get("/articles-all", async function (req, res) {
     const articlesAll = await articleDb.getArticles();
     res.locals.articles = articlesAll;
-    // console.log(articlesAll);
+
+    const commentsAll = await commentDb.getComments();
+    res.locals.comments = commentsAll;
+    console.log(commentsAll);
+
     res.render("all-articles");
 });
 
