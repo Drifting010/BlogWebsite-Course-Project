@@ -18,6 +18,23 @@ h3 {
     text-align: center;
 }
 
+.button {
+    margin: 3px 3px;
+}
+
+.new-button {
+    margin: 3px 3px;
+    background-color: #049faa;
+    color: white;
+    padding: 5px 10px;
+    border: 1px rgb(200, 198, 198) solid;
+    border-radius: 5px;
+}
+
+.new-button a {
+    color:white;
+    text-decoration: none;
+}
 /*****************************************************************/
 
 
@@ -39,6 +56,12 @@ h3 {
     width: 350px
 }
 
+.article {
+    background-color: rgba(244, 244, 244, 0.807);
+    margin:10px 0px;
+    padding: 5px 15px 10px 15px;
+}
+
 /*****************************************************************/
 
 
@@ -58,10 +81,10 @@ h3 {
 /* Dropdown */
 /*****************************************************************/
 .dropbtn {
-    background-color: #049faa;
-    color: white;
-    padding: 10px;
-    border: none;
+    margin: 3px 3px;
+    padding: 5px 10px;
+    border: 1px rgb(119, 117, 117) solid;
+    border-radius: 5px;
 }
 
 .dropdown {
@@ -80,7 +103,7 @@ h3 {
 
 .dropdown-content a {
     color: black;
-    padding: 12px 16px;
+    padding: 10px 16px;
     text-decoration: none;
     display: block;
 }

@@ -1,35 +1,40 @@
 <div class="container">
 
-<h1>Kia Ora, {{user.first_name}}!</h1>
+    <h1>Kia Ora, {{user.first_name}}!</h1>
 
-<h3> Your profile details:</h3>
+    <div class="flex-row align-center">
+        <button class="new-button"><a href="./articles-user">View your articles</a></button>
+        <button class="new-button"><a href="./createarticle">Create new article</a></button>
+    </div>
 
-<div>
-<table>
-    <tr>
-        <td>Username:</td>
-        <td>{{user.username}}</td>
-    </tr>
-        <tr>
-        <td>First name:</td>
-        <td>{{user.first_name}}</td>
-    </tr>
-        <tr>
-        <td>Last name:</td>
-        <td>{{user.last_name}}</td>
-    </tr>
-        <tr>
-        <td>Date of birth:</td>
-        <td>{{user.date_of_birth}}</td>
-    </tr>
-        <tr>
-        <td>Description:</td>
-        <td>{{user.description}}</td>
-    </tr>
-</table>
-</div>
+    <h3> Your profile details:</h3>
 
-<p><a href="./updateaccount">Update account details</a></p>
-<p><a href="./deleteaccount">Delete account</a></p>
+    <div>
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td>{{user.username}}</td>
+            </tr>
+            <tr>
+                <td>First name:</td>
+                <td>{{user.first_name}}</td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td>{{user.last_name}}</td>
+            </tr>
+            <tr>
+                <td>Date of birth:</td>
+                <td>{{user.date_of_birth}}</td>
+            </tr>
+            <tr>
+                <td>Description:</td>
+                <td>{{user.description}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <p><a href="./updateaccount">Update account details</a></p>
+    <p><a href="./deleteaccount">Delete account</a></p>
 
 </div>
