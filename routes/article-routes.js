@@ -11,7 +11,7 @@ router.get("/articles-all", async function (req, res) {
 
     const commentsAll = await commentDb.getComments();
     res.locals.comments = commentsAll;
-    console.log(commentsAll);
+    // console.log(commentsAll);
 
     res.render("all-articles");
 });

@@ -57,7 +57,7 @@ router.get("/logout", function (req, res) {
     res.clearCookie("authToken"); 
     res.locals.user = null;
     res.setToastMessage("Successfully logged out!"); 
-    res.redirect("/login");
+    res.redirect("/articles-all");
 });
 
 
