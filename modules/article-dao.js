@@ -27,6 +27,14 @@ async function getArticleById(id) {
     return article;
 }
 
+/**
+ * delete an article by its id
+ */
+async function deleteArticleById(id) {
+    const db = await dbPromise;
+    await db.run(SQL`
+        delete from articles where article_id=${id}`);
+}
 
 async function createArticle(article) {
     const db = await dbPromise;
@@ -148,6 +156,7 @@ module.exports = {
     getArticlesByUser,
     createArticle,
     getArticleById,
+    deleteArticleById,
     articlesByTitleZa,
     articlesByTitleAz,
     articlesByUsernameZa,

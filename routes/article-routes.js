@@ -47,7 +47,7 @@ router.get("/create-article", function (req, res) {
     res.render("create-article");
 });
 
-// Edit Articles
+// EDIT ARTICLEs
 router.post("/article-edit", async function (req, res) {
     const article_id = req.body.article_id;
     const article = await articleDb.getArticleById(article_id);
@@ -56,6 +56,13 @@ router.post("/article-edit", async function (req, res) {
 
 });
 
+// DELETE ARTICLEs
+router.post("/article-delete", async function (req, res) {
+    const article_id = req.body.article_id;
+    await articleDb.deleteArticleById(article_id);
+
+    res.redirect("./articles-user");
+});
 
 // ALL ARTICLES SORTING
 router.get("/articles-all-title-az", async function (req, res) {
