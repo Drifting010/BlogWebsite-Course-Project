@@ -94,6 +94,7 @@ async function updateUserToken(user) {
 
 async function updateUserDetails(user) {
     const db = await dbPromise;
+    const hash = await bcrypt.hash(user.password, 10);
 
     await db.run(SQL`
         update users
@@ -102,7 +103,8 @@ async function updateUserDetails(user) {
         first_name = ${user.first_name},
         last_name = ${user.last_name},
         date_of_birth = ${user.date_of_birth},
-        description = ${user.description}
+        description = ${user.description},
+        pass = ${hash}
         where user_id = ${user.user_id}`);
 }
 
