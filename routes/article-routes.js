@@ -27,7 +27,8 @@ router.post("/publish-article", async function (req, res) {
         title: req.body.title,
         content: req.body.content,
         // image: req.file,
-        user_id: user.user_id
+        user_id: user.user_id,
+        username: user.username
     };
     articleDb.createArticle(article);
 
@@ -42,28 +43,28 @@ router.get("/create-article", function (req, res) {
 });
 
 // ALL ARTICLES SORTING
-router.get("/articles-all/title-az", async function (req, res) {
+router.get("/articles-all-title-az", async function (req, res) {
     const articles = await articleDb.articlesByTitleAz();
 
     res.locals.articles = articles;
     res.render("all-articles");
 });
 
-router.get("/articles-all/title-za", async function (req, res) {
+router.get("/articles-all-title-za", async function (req, res) {
     const articles = await articleDb.articlesByTitleZa();
 
     res.locals.articles = articles;
     res.render("all-articles");
 });
 
-router.get("/articles-all/username-az", async function (req, res) {
+router.get("/articles-all-username-az", async function (req, res) {
     const articles = await articleDb.articlesByUsernameAz();
 
     res.locals.articles = articles;
     res.render("all-articles");
 });
 
-router.get("/articles-all/username-za", async function (req, res) {
+router.get("/articles-all-username-za", async function (req, res) {
     const articles = await articleDb.articlesByUsernameZa();
 
     res.locals.articles = articles;
@@ -71,14 +72,14 @@ router.get("/articles-all/username-za", async function (req, res) {
 });
 
 // default rendering
-router.get("/articles-all/date-desc", async function (req, res) {
+router.get("/articles-all-date-desc", async function (req, res) {
     const articles = await articleDb.articlesByDateDesc();
 
     res.locals.articles = articles;
     res.render("all-articles");
 });
 
-router.get("/articles-all/date-asc", async function (req, res) {
+router.get("/articles-all-date-asc", async function (req, res) {
     const articles = await articleDb.articlesByDateAsc();
 
     res.locals.articles = articles;
@@ -86,7 +87,7 @@ router.get("/articles-all/date-asc", async function (req, res) {
 });
 
 // USER ARTICLES SORTING
-router.get("/articles-user/title-az", async function (req, res) {
+router.get("/articles-user-title-az", async function (req, res) {
     const user = res.locals.user;
     const articles = await articleDb.userArticlesByTitleAz(user);
 
@@ -94,7 +95,7 @@ router.get("/articles-user/title-az", async function (req, res) {
     res.render("user-articles");
 });
 
-router.get("/articles-user/title-za", async function (req, res) {
+router.get("/articles-user-title-za", async function (req, res) {
     const user = res.locals.user;
     const articles = await articleDb.userArticlesByTitleZa(user);
 
@@ -102,7 +103,7 @@ router.get("/articles-user/title-za", async function (req, res) {
     res.render("user-articles");
 });
 
-router.get("/articles-user/username-az", async function (req, res) {
+router.get("/articles-user-username-az", async function (req, res) {
     const user = res.locals.user;
     const articles = await articleDb.userArticlesByUsernameAz(user);
 
@@ -110,7 +111,7 @@ router.get("/articles-user/username-az", async function (req, res) {
     res.render("user-articles");
 });
 
-router.get("/articles-user/username-za", async function (req, res) {
+router.get("/articles-user-username-za", async function (req, res) {
     const user = res.locals.user;
     const articles = await articleDb.userArticlesByUsernameZa(user);
 
@@ -118,7 +119,7 @@ router.get("/articles-user/username-za", async function (req, res) {
     res.render("user-articles");
 });
 
-router.get("/articles-user/date-desc", async function (req, res) {
+router.get("/articles-user-date-desc", async function (req, res) {
     const user = res.locals.user;
     const articles = await articleDb.userArticlesByDateDesc(user);
 
@@ -126,7 +127,7 @@ router.get("/articles-user/date-desc", async function (req, res) {
     res.render("user-articles");
 });
 
-router.get("/articles-user/date-asc", async function (req, res) {
+router.get("/articles-user-date-asc", async function (req, res) {
     const user = res.locals.user;
     const articles = await articleDb.userArticlesByDateAsc(user);
 
