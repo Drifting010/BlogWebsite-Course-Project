@@ -156,6 +156,7 @@ module.exports = {
     getArticlesByUser,
     createArticle,
     getArticleById,
+    deleteArticleById,
     articlesByTitleZa,
     articlesByTitleAz,
     articlesByUsernameZa,
