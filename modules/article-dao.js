@@ -32,7 +32,7 @@ async function createArticle(article) {
     const db = await dbPromise;
 
     await db.run(SQL`
-    insert into articles (title, content, user_id)  values (${article.title},${article.content}, ${article.user_id});`);
+    insert into articles (title, content, user_id, username)  values (${article.title},${article.content}, ${article.user_id}, ${article.username});`);
 }
 
 // ALL ARTICLES SORTING
@@ -55,7 +55,7 @@ async function articlesByTitleAz(){
 
 
 /**
- * retrieve articles ordered by its title from Database
+ * retrieve articles ordered by its username from Database
  */
 async function articlesByUsernameZa(){
     const db = await dbPromise;
@@ -71,7 +71,7 @@ async function articlesByUsernameAz(){
 }
 
 /**
- * retrieve articles ordered by its title from Database
+ * retrieve articles ordered by its date from Database
  */
 async function articlesByDateDesc(){
     const db = await dbPromise;
@@ -108,12 +108,12 @@ async function userArticlesByTitleAz(user){
 
 
 /**
- * retrieve articles ordered by its title from Database
+ * retrieve articles ordered by its username from Database
  */
 async function userArticlesByUsernameZa(user){
     const db = await dbPromise;
     const articles = await db.all(SQL`
-        select * from articles where user_id=${user.user_id} order by username desc`);
+        select * from articles where user_id=${user.user_id} order by username desc;`);
 
     return articles;
 }
@@ -126,7 +126,7 @@ async function userArticlesByUsernameAz(user){
 }
 
 /**
- * retrieve articles ordered by its title from Database
+ * retrieve articles ordered by its date from Database
  */
 async function userArticlesByDateDesc(user){
     const db = await dbPromise;
