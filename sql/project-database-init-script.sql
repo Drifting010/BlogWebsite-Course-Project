@@ -32,6 +32,7 @@ CREATE TABLE comments (
     comment_id INTEGER not null primary key, 
     content TEXT,
     created_datetime TIMESTAMP default CURRENT_TIMESTAMP,
+	upvote INTEGER,
     downvote INTEGER,
     parent_comment_id INTEGER,
     user_id INTEGER,
@@ -39,7 +40,6 @@ CREATE TABLE comments (
     article_id INTEGER,
     FOREIGN KEY (parent_comment_id) REFERENCES comments (comment_id),
     FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (username) REFERENCES users (username),
     FOREIGN KEY (article_id) REFERENCES articles (article_id)
 );
 
@@ -50,3 +50,8 @@ CREATE TABLE likedarticles (
     FOREIGN KEY (user_id) REFERENCES users (user_id),
     FOREIGN KEY (article_id) REFERENCES articles (article_id)
 );
+
+select c.*, u.username from comments as c
+	inner join users as u
+	on (c.user_id = u.user_id);
+
