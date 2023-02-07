@@ -4,12 +4,11 @@ const router = express.Router();
 const articleDb = require("../modules/article-dao.js");
 const commentDb = require("../modules/comment-dao.js");
 
-
 router.get("/articles-all", async function (req, res) {
     const articlesAll = await articleDb.getArticles();
     res.locals.articles = articlesAll;
 
-    const commentsAll = await commentDb.getComments();
+    const commentsAll = await commentDb.getCommentsById();
     res.locals.comments = commentsAll;
     // console.log(commentsAll);
 
@@ -156,6 +155,15 @@ router.get("/articles-user-date-asc", async function (req, res) {
     res.locals.articles = articles;
     res.render("user-articles");
 });
+
+router.get("/article/:article_id", async function(req, res) {
+    const article = await articleDb.getArticleById(req.params.article_id);
+    const comments = await commentDb.getCommentsById(req.params.article_id);
+    res.locals.article = article;
+    res.locals.comments = comments;
+    res.render("single-article");
+});
+
 
 function makeArray(input) {
     if (input === undefined) {
