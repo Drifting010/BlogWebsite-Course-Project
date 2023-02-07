@@ -1,0 +1,46 @@
+<div class="container">
+<div class="flex-row align-center justify-end">
+            <button class="new-button"><a href="/articles-user">View your articles</a></button>
+        <button class="new-button"><a href="/articles-all">Browse all articles</a></button>
+</div>
+    <div class="article">
+    <h1>{{article.title}}</h1>
+
+    <h5> Written by <span class="author"> {{article.username}} </span> on {{article.created_datetime}} </h5>
+    <input value="{{article.article_id}}" hidden>
+    <p>{{{article.content}}}</p>
+
+    {{#if article.image}}
+    <img src="{{article.image}}" alt="">
+    {{/if}}
+     </div>
+
+
+    <div>
+    <h3>Add comments:</h3>
+    <form action="/add-comment" method="POST" class="form">
+    <input type="hidden" name="articleId" value={{article.article_id}}>
+    <textarea name="comment"></textarea>
+        <div class="flex-row justify-sb align-center">
+            <button class="button" type="submit">Post comment</button>
+        </div>
+    </form>
+    </div>
+
+    <div>
+        <div class="flex-row align-center">
+        <h3>Comments:</h3>
+        <button class="button"><a href="#" class="unlink">View all</a></button>
+        <button class="button"><a href="#" class="unlink">Hide all</a></button>
+    </div>
+
+    {{#each comments}}
+        <div>
+            <h6> Written by <span class="author"> {{this.username}} </span> on {{this.created_datetime}} </h6>
+            <p>{{this.content}}</p>
+        </div>
+    {{/each}}
+</div>
+
+</div>
+</div>

@@ -9,12 +9,13 @@ router.post("/add-comment", async function (req, res) {
     const comment = {
         content: req.body.comment,
         user_id: user.user_id,
+        username: user.username,
         article_id: req.body.articleId
     };
     
-    commentDb.createComment(comment);
+    await commentDb.createComment(comment);
 
-    res.redirect("/articles-all");
+    res.redirect("back");
 });
 
 module.exports = router; 
