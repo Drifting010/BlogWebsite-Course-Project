@@ -11,7 +11,7 @@ router.get("/articles-all", async function (req, res) {
 
     const commentsAll = await commentDb.getComments();
     res.locals.comments = commentsAll;
-    console.log(commentsAll);
+    // console.log(commentsAll);
 
     res.render("all-articles");
 });
@@ -51,7 +51,7 @@ router.get("/create-article", function (req, res) {
 router.post("/article-edit", async function (req, res) {
     const article_id = req.body.article_id;
     const article = await articleDb.getArticleById(article_id);
-    console.log(article);
+    // console.log(article);
     // TODO: populate article in WYSIWYG editor
 
 });
