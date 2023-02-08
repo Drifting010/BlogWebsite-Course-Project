@@ -33,39 +33,51 @@ window.addEventListener("load", async function (event) {
             console.log(commentLayerOne[i].id);
             let comment_id = commentLayerOne[i].id;
             let responseOne = await fetch(`/comments-all?comment_id=${comment_id}`);
-            let json = await responseOne.json();
+            let commentLayerTwo = await responseOne.json();
             console.log(responseOne);
-            console.log(json);
-            // let responseOne = await fetch("./commentsAll?comment_id=1");
-            // let commentLayerTwo = await responseOne.json();
+            console.log(commentLayerTwo);
 
-            // for (let j = 0; j < commentLayerTwo.length; j++) {
-            //     // COMMENT1.appendChild(COMMENT2)
-            //     let reponseTwo = await fetch(`./comments-all?comment_id=${commentLayerTwo[j].comment_id}`);
-            //     let commentLayerThree = await reponseTwo.json();
+            for (let j = 0; j < commentLayerTwo.length; j++) {
+                // COMMENT1.appendChild(COMMENT2)
+                // let comment_id = commentLayerTwo[j].comment_id;
+                // let reponseTwo = await fetch(`/comments-all?comment_id=${comment_id}`);
+                // let commentLayerThree = await reponseTwo.json();
+                // console.log(reponseTwo);
+                // console.log(commentLayerThree);
 
-            //     let ul_Two = document.createElement("ul");
-            //     for (let k = 0; k < commentLayerThree.length; k++) {
-            //         // COMMENT2.appendChild(COMMENT3)
-            //         let li_Two = document.createElement("li");
-            //         li_Two.innerText = commentLayerThree[k].content;
-            //         ul_Two.appendChild(li_Two);
-            //     }
+                let ul_Two = document.createElement("ul");
+                let li_two = document.createElement("li");
+                ul_Two.appendChild(li_two);
+                // for (let k = 0; k < commentLayerThree.length; k++) {
+                //     // COMMENT2.appendChild(COMMENT3)
+                //     let li_Two = document.createElement("li");
+                //     li_Two.innerText = commentLayerThree[k].content;
+                //     ul_Two.appendChild(li_Two);
+                // }
 
-            //     commentLayerOne[i].appendChild(ul_Two);
+                li_two.innerText = commentLayerTwo[j].content;
+                commentLayerOne[i].appendChild(ul_Two);
 
-            //     let divThird = document.createElement("div");
-            //     divThird.style.display = "none";
-            //     divThird.innerHTML = `
-            //     BBBB
-            //     <form action="/add-3rd-comment" method="POST" class="form">
-            //         <input type="hidden" name="parent_comment_id" value="${commentLayerTwo[j].comment_id}">
-            //         <textarea name="thirdComment"></textarea>
-            //         <div class="flex-row justify-sb align-center">
-            //             <button class="button" type="submit">Post comment</button>
-            //         </div>
-            //     </form>`;
-            // }
+                let buttonOne = document.createElement("button");
+                buttonOne.innerText = "reply";
+                let buttonTwo = document.createElement("button");
+                buttonTwo.innerText = "delete";
+
+                commentLayerOne[i].appendChild(buttonOne);
+                commentLayerOne[i].appendChild(buttonTwo);
+
+                // let divThird = document.createElement("div");
+                // divThird.style.display = "none";
+                // divThird.innerHTML = `
+                // BBBB
+                // <form action="/add-3rd-comment" method="POST" class="form">
+                //     <input type="hidden" name="parent_comment_id" value="${commentLayerTwo[j].comment_id}">
+                //     <textarea name="thirdComment"></textarea>
+                //     <div class="flex-row justify-sb align-center">
+                //         <button class="button" type="submit">Post comment</button>
+                //     </div>
+                // </form>`;
+            }
         }
     }
 
