@@ -26,12 +26,10 @@ router.post("/add-2nd-comment", async function (req, res) {
     const comment = {
         content: req.body.secondComment,
         parent_comment_id: req.body.parent_comment_id,
-        user_id: user.user_id,
-        username: user.username,
-        article_id: req.body.articleId
+        user_id: user.user_id
     };
     
-    await commentDb.createComment(comment);
+    await commentDb.createCommentTwo(comment);
 
     res.redirect("back");
 });
@@ -41,14 +39,12 @@ router.post("/add-3rd-comment", async function (req, res) {
     const user = res.locals.user;
 
     const comment = {
-        content: req.body.secondComment,
+        content: req.body.thridComment,
         parent_comment_id: req.body.parent_comment_id,
-        user_id: user.user_id,
-        username: user.username,
-        article_id: req.body.articleId
+        user_id: user.user_id
     };
     
-    await commentDb.createComment(comment);
+    await commentDb.createCommentThree(comment);
 
     res.redirect("back");
 });
