@@ -1,6 +1,8 @@
 <script type="application/javascript" src="/tinymce/tinymce.min.js"></script>
 <script type="application/javascript" src="./my-tinymce-config.js"></script>
 
+
+<!-- Create uploading image button -->
 <form action="./uploadImage" method="POST" enctype="multipart/form-data">
 
     <div class="form-group">
@@ -25,13 +27,15 @@
         </div>
 
         <textarea name="content" id="article-text">
-            <div class="container">
-      <div class="flex-col align-center">
-        <p>{{fileName}}</p>
-        <p><img src="uploadedFiles/{{fileName}}"></p>
-        <p><em>{{caption}}</em></p>
-    </div>
-</div>
+
+
+        <div class="flex-col align-center">
+           <p>{{fileName}}</p>
+           <p><img src="uploadedFiles/{{fileName}}"></p>
+           <p><em>{{caption}}</em></p>
+        </div>
+
+
         </textarea>
 
         <div class="flex-row justify-sb align-center">
