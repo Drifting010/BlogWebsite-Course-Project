@@ -5,7 +5,7 @@ async function createComment(comment) {
     const db = await dbPromise;
 
     await db.run(SQL`
-    insert into comments (content, username, user_id, article_id)  values (${comment.content}, ${comment.username}, ${comment.user_id}, ${comment.article_id});`);
+    insert into comments (content, username, user_id, article_id, parent_comment_id)  values (${comment.content}, ${comment.username}, ${comment.user_id}, ${comment.article_id}, ${comment.parent_comment_id});`);
 }
 
 async function getCommentsById(id) {
