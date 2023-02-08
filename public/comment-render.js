@@ -54,29 +54,21 @@ window.addEventListener("load", async function (event) {
                 let reponseTwo = await fetch(`/comments-all?comment_id=${comment_id}`);
                 let commentLayerThree = await reponseTwo.json();
                 // console.log(reponseTwo);
-                console.log(commentLayerThree);
+                // console.log(commentLayerThree);
 
+                // COMMENT2.appendChild(COMMENT3)
                 let ul_three = document.createElement("ul");
+                ul_three.style.listStyleType = "none"; // bullet remove
+
                 for (let k = 0; k < commentLayerThree.length; k++) {
-                    // COMMENT2.appendChild(COMMENT3)
                     let li_three = document.createElement("li");
                     li_three.innerText = commentLayerThree[k].content;
                     ul_three.appendChild(li_three);
                 }
 
-                // let divThird = document.createElement("div");
-                // divThird.style.display = "none";
-                // divThird.innerHTML = `
-                // BBBB
-                // <form action="/add-3rd-comment" method="POST" class="form">
-                //     <input type="hidden" name="parent_comment_id" value="${commentLayerTwo[j].comment_id}">
-                //     <textarea name="thirdComment"></textarea>
-                //     <div class="flex-row justify-sb align-center">
-                //         <button class="button" type="submit">Post comment</button>
-                //     </div>
-                // </form>`;
-
                 let ul_Two = document.createElement("ul");
+                ul_Two.style.listStyleType = "none"; // bullet remove 
+
                 let li_two = document.createElement("li");
                 li_two.innerText = commentLayerTwo[j].content;
                 li_two.appendChild(ul_three);
@@ -101,7 +93,7 @@ window.addEventListener("load", async function (event) {
                 ul_Two.appendChild(li_two);
                 ul_Two.appendChild(span);
                 ul_Two.appendChild(divComment);
-                
+
                 commentLayerOne[i].appendChild(ul_Two);
             }
         }
