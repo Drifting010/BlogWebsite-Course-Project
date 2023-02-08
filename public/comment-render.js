@@ -1,13 +1,6 @@
 window.addEventListener("load", async function (event) {
 
-
-
-    // const commentLayerOne = document.querySelectorAll("span.first_layer_comments");
-    // console.log(commentLayerOne);
-    // for (let i = 0; i < commentLayerOne.length; i++) {
-    //     console.log(commentLayerOne[i].id);
-    // }
-
+    // When click repy button, textarea appears
     const replyButtonArray = document.querySelectorAll(".replyButton");
     console.log(replyButtonArray);
     const deleteButtonArray = document.querySelectorAll(".deleteButton");
@@ -22,19 +15,15 @@ window.addEventListener("load", async function (event) {
         });
     }
 
-
-    // *****增加.js：reply按键仍然对应不准确，应当再创建一个.js文件，然后在main.handlbars中，引用在当前.js文件之后
-
+    // rendering all levels of comments
     renderComments();
 
-    // *****增加.js：reply按键仍然对应不准确，应当再创建一个.js文件，然后在main.handlbars中，引用在当前.js文件之后
 
-
-
-
+    
+    // FUNCTIONS
     // NESTING OF COMMENTS: THREE LAYERS
     async function renderComments() {
-        // console.log("CLICKED");
+
         const commentLayerOne = document.querySelectorAll("span.first_layer_comments"); // COMMENT1
 
         // COMMENT NESTING
@@ -79,7 +68,7 @@ window.addEventListener("load", async function (event) {
                 let divSecondCommentReply = document.createElement("div");
                 divSecondCommentReply.style.display = "none";
 
-                buttonReply.addEventListener("click",function(event){
+                buttonReply.addEventListener("click", function (event) {
                     divSecondCommentReply.style.display = "block";
                 });
 
@@ -102,7 +91,7 @@ window.addEventListener("load", async function (event) {
                 divSecondComment.appendChild(ul_Two);
 
                 divFirstComment[i].appendChild(divSecondComment);
-                
+
             }
         }
     }
