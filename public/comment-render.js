@@ -8,53 +8,55 @@ window.addEventListener("load", async function (event) {
     //     console.log(commentLayerOne[i].id);
     // }
 
-
-
-
-    // *****增加.js：reply按键仍然对应不准确，应当再创建一个.js文件，然后在main.handlbars中，引用在当前.js文件之后
-
-
-    renderComments();
-
     const replyButtonArray = document.querySelectorAll(".replyButton");
-    // console.log(replyButtonArray);
+    console.log(replyButtonArray);
     const deleteButtonArray = document.querySelectorAll(".deleteButton");
-    const divSecondComments = document.querySelectorAll(".secondComments");
-    // console.log(divSecondComments);
+    const divFirstCommentReply = document.querySelectorAll("div.firstCommentReply");
+    console.log(divFirstCommentReply);
+    const divFirstComment = document.querySelectorAll("div.firstComment");
     // Reply to first layer comments
     for (let i = 0; i < replyButtonArray.length; i++) {
 
         replyButtonArray[i].addEventListener("click", function () {
-            divSecondComments[i].style.display = "block";
+            divFirstCommentReply[i].style.display = "block";
         });
     }
 
 
+    // *****增加.js：reply按键仍然对应不准确，应当再创建一个.js文件，然后在main.handlbars中，引用在当前.js文件之后
+
+    renderComments();
+
+    // *****增加.js：reply按键仍然对应不准确，应当再创建一个.js文件，然后在main.handlbars中，引用在当前.js文件之后
+
+
+
 
     // NESTING OF COMMENTS: THREE LAYERS
-
     async function renderComments() {
-        console.log("CLICKED");
+        // console.log("CLICKED");
         const commentLayerOne = document.querySelectorAll("span.first_layer_comments"); // COMMENT1
-        // console.log(commentLayerOne);
-        // let responseOne = await fetch("/comments-all");
-        // console.log(responseOne);
-        // console.log("CLICKEDTWO");
+
+        // COMMENT NESTING
         for (let i = 0; i < commentLayerOne.length; i++) {
-            // console.log(commentLayerOne[i].id);
             let comment_id = commentLayerOne[i].id;
             let responseOne = await fetch(`/comments-all?comment_id=${comment_id}`);
             let commentLayerTwo = await responseOne.json();
-            // console.log(responseOne);
-            // console.log(commentLayerTwo);
 
+            // COMMENT1.appendChild(COMMENT2)
             for (let j = 0; j < commentLayerTwo.length; j++) {
-                // COMMENT1.appendChild(COMMENT2)
                 let comment_id = commentLayerTwo[j].comment_id;
                 let reponseTwo = await fetch(`/comments-all?comment_id=${comment_id}`);
                 let commentLayerThree = await reponseTwo.json();
-                // console.log(reponseTwo);
-                // console.log(commentLayerThree);
+
+                // Reply and Delete button
+                let span = document.createElement("span");
+                const buttonReply = document.createElement("button");
+                buttonReply.innerText = "reply";
+                const buttonDelete = document.createElement("button");
+                buttonDelete.innerText = "delete";
+                span.appendChild(buttonReply);
+                span.appendChild(buttonDelete);
 
                 // COMMENT2.appendChild(COMMENT3)
                 let ul_three = document.createElement("ul");
@@ -71,33 +73,38 @@ window.addEventListener("load", async function (event) {
 
                 let li_two = document.createElement("li");
                 li_two.innerText = commentLayerTwo[j].content;
-                li_two.appendChild(ul_three);
+                li_two.appendChild(span);
 
-                let span = document.createElement("span");
-                span.innerHTML = `<button class="replyButton">reply</button>
-                    <button class="deleteButton">delete</button>`;
+                // Input div to reply layer two comments
+                let divSecondCommentReply = document.createElement("div");
+                divSecondCommentReply.style.display = "none";
 
-                let divComment = document.createElement("div");
-                divComment.style.display = "none";
-                divComment.classList.add("secondComments");
-                console.log(divComment);
-                divComment.innerHTML =
+                buttonReply.addEventListener("click",function(event){
+                    divSecondCommentReply.style.display = "block";
+                });
+
+                // console.log(divSecondCommentReply);
+                divSecondCommentReply.innerHTML =
                     `<form action="/add-2nd-comment" method="POST" class="form">
                         <input type="hidden" name="parent_comment_id" value="${commentLayerTwo[j].comment_id}">
                         <textarea name="secondComment"></textarea>
                         <div class="flex-row justify-sb align-center">
                             <button class="button2nd" type="submit">Post comment</button>
                         </div>
-                    </form>`
+                    </form>`;
 
+
+                li_two.appendChild(divSecondCommentReply);
+
+                let divSecondComment = document.createElement("div");
                 ul_Two.appendChild(li_two);
-                ul_Two.appendChild(span);
-                ul_Two.appendChild(divComment);
+                ul_Two.appendChild(ul_three);
+                divSecondComment.appendChild(ul_Two);
 
-                commentLayerOne[i].appendChild(ul_Two);
+                divFirstComment[i].appendChild(divSecondComment);
+                
             }
         }
     }
-
 
 });

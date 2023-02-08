@@ -35,13 +35,13 @@
         </div>
 
         {{#each comments}}
-        <div>
+        <div class="firstComment">
             <h6> Written by <span class="author"> {{this.username}} </span> on {{this.created_datetime}} </h6>
             <p><span id="{{this.comment_id}}" class="first_layer_comments">{{this.content}}<button class="replyButton">reply</button><button class="deleteButton">delete</button></span>
             </p>
 
             {{!-- 2nd Layer Comments --}}
-            <div style="display: none" class="secondComments">
+            <div style="display: none" class="firstCommentReply">
                 AAAA
                 <form action="/add-2nd-comment" method="POST" class="form">
                     <input type="hidden" name="parent_comment_id" value="{{this.comment_id}}">
