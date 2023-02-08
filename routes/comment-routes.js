@@ -34,27 +34,11 @@ router.post("/add-2nd-comment", async function (req, res) {
 
 // route handler for rendering all comments of one article
 router.get("/comments-all", async function (req, res) {
-    console.log("Triggered");
     const comment_id = req.query.comment_id;
-    console.log(comment_id);
     const commentsArray = await commentDb.getCommentsByParentId(comment_id);
-    console.log(commentsArray);
+
     res.json(commentsArray);
 });
 
-// // route handler for the third layer comments
-// router.get("/add-3rd-comment", async function (req, res) {
-//     const user = res.locals.user;
-
-//     const comment = {
-//         content: req.body.thridComment,
-//         parent_comment_id: req.body.parent_comment_id,
-//         user_id: user.user_id
-//     };
-
-//     await commentDb.createCommentThree(comment);
-
-//     res.redirect("back");
-// });
 
 module.exports = router; 

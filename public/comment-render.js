@@ -2,10 +2,10 @@ window.addEventListener("load", async function (event) {
 
     // When click repy button, textarea appears
     const replyButtonArray = document.querySelectorAll(".replyButton");
-    console.log(replyButtonArray);
+
     const deleteButtonArray = document.querySelectorAll(".deleteButton");
     const divFirstCommentReply = document.querySelectorAll("div.firstCommentReply");
-    console.log(divFirstCommentReply);
+
     const divFirstComment = document.querySelectorAll("div.firstComment");
     // Reply to first layer comments
     for (let i = 0; i < replyButtonArray.length; i++) {
@@ -19,9 +19,9 @@ window.addEventListener("load", async function (event) {
     renderComments();
 
 
-    
+
     // FUNCTIONS
-    // NESTING OF COMMENTS: THREE LAYERS
+    // NESTING AND REPLYING OF COMMENTS
     async function renderComments() {
 
         const commentLayerOne = document.querySelectorAll("span.first_layer_comments"); // COMMENT1
