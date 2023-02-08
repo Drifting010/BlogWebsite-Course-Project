@@ -133,6 +133,4 @@ router.get("/deleteaccount", async function (req, res) {
     //TODO add useful message to confirm account deletion for user
 });
 
-
-
 module.exports = router; // export all the routers in order to import them in the main application

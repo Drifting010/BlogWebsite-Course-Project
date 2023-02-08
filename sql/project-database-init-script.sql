@@ -1,4 +1,6 @@
 DROP TABLE IF EXISTS likedarticles;
+DROP TABLE IF EXISTS commentsthree;
+DROP TABLE IF EXISTS commentstwo;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS articles;
 DROP TABLE IF EXISTS users;
@@ -34,13 +36,35 @@ CREATE TABLE comments (
     created_datetime TIMESTAMP default CURRENT_TIMESTAMP,
 	upvote INTEGER,
     downvote INTEGER,
+	parent_comment_id INTEGER,
+    user_id INTEGER,
+    article_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (article_id) REFERENCES articles (article_id) ON DELETE CASCADE
+);
+
+CREATE TABLE commentstwo (
+    comment_id INTEGER not null primary key, 
+    content TEXT,
+    created_datetime TIMESTAMP default CURRENT_TIMESTAMP,
+	upvote INTEGER,
+    downvote INTEGER,
     parent_comment_id INTEGER,
     user_id INTEGER,
-    username VARCHAR(20),
-    article_id INTEGER,
-    FOREIGN KEY (parent_comment_id) REFERENCES comments (comment_id),
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (article_id) REFERENCES articles (article_id)
+    FOREIGN KEY (parent_comment_id) REFERENCES comments (comment_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE commentsthree (
+    comment_id INTEGER not null primary key, 
+    content TEXT,
+    created_datetime TIMESTAMP default CURRENT_TIMESTAMP,
+	upvote INTEGER,
+    downvote INTEGER,
+    parent_comment_id INTEGER,
+    user_id INTEGER,
+    FOREIGN KEY (parent_comment_id) REFERENCES commentstwo (comment_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE likedarticles (

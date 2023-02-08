@@ -160,21 +160,10 @@ router.get("/articles-user-date-asc", async function (req, res) {
 // DISPLAY: Articles and Comments
 router.get("/article/:article_id", async function (req, res) {
     const article = await articleDb.getArticleById(req.params.article_id);
-    const comments = await makeArray(commentDb.getCommentsById(req.params.article_id));
-
-    const commentsTwoSet = [];
-    for (let i = 0; i < comments.length; i++) {
-        const commentsTwo = await commentDb.getCommentsTwoById();
-        commentsTwoSet[i]
-    }
-
+    const comments = await commentDb.getCommentsById(req.params.article_id);
     
-
-
     res.locals.article = article;
     res.locals.comments = comments;
-    res.json();
-    res.json();
     res.render("single-article");
 });
 
