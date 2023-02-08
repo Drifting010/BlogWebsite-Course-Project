@@ -1,34 +1,42 @@
 <script type="application/javascript" src="/tinymce/tinymce.min.js"></script>
 <script type="application/javascript" src="./my-tinymce-config.js"></script>
 
+<form action="./uploadImage" method="POST" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label for="inpFile">Upload an image here!</label>
+        <!-- The "accept" attribute can provide a filter for suggested file types - but
+                    we CANNOT prevent the user from selecting anything (we have to do that server-side). -->
+        <input id="inpFile" type="file" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
+    </div>
+
+    <div class="form-group align-start">
+        <button type="submit">Upload</button>
+    </div>
+
+</form>
 <div class="container">
     <h1>Create an article</h1>
 
-        <form action="./publish-article" method="POST" class="form" id="formArticle">
-            <div class="flex-col mb">
-                <label for="article-title">Title:</label>
-                <input type="text" name="title" id="article-title" required>
-            </div>
-         
+    <form action="./publish-article" method="POST" class="form" id="formArticle">
+        <div class="flex-col mb">
+            <label for="article-title">Title:</label>
+            <input type="text" name="title" id="article-title" required>
+        </div>
 
-        
-                <form action="./uploadImage" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="inpFile">Upload an image here!</label>
+        <textarea name="content" id="article-text">
+            <div class="container">
+      <div class="flex-col align-center">
+        <p>{{fileName}}</p>
+        <p><img src="uploadedFiles/{{fileName}}"></p>
+        <p><em>{{caption}}</em></p>
+    </div>
+</div>
+        </textarea>
 
-                    <input id="inpFile" type="file" name="imageFile" accept=".png,.jpg,.jpeg,.bmp">
-                </div>
-                    <div class="form-group">
-                    <button type="submit">Upload</button>
-                </div>
-            </form>
+        <div class="flex-row justify-sb align-center">
+            <button type="submit">Publish article</button>
+        </div>
 
-            <textarea name="content" id="article-text">
-
-            </textarea>
-
-            <div class="flex-row justify-sb align-center">
-                <button type="submit">Publish article</button>
-            </div>
-        </form>
+    </form>
 </div>

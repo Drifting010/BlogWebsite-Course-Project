@@ -135,4 +135,11 @@ router.get("/deleteaccount", async function (req, res) {
 
 
 
+
+
+
+
+
+
+
 module.exports = router; // export all the routers in order to import them in the main application
