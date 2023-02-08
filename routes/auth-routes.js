@@ -108,7 +108,7 @@ router.post("/updateaccount", async function (req, res) {
         description: req.body.description,
     };
 
-    userDb.updateUserDetails(user);
+    await userDb.updateUserDetails(user);
 
     res.redirect("/"); 
 });
