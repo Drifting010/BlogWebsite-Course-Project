@@ -79,7 +79,6 @@ router.post("/newAccount", async function (req, res) {
 
     try { 
         await userDb.createUser(user);
-
         res.setToastMessage("Account created successfully!"); 
         res.redirect("/login"); 
     } catch (err) { 
@@ -94,21 +93,19 @@ router.get("/updateAccount", function (req, res) {
 });
 
 router.post("/updateaccount", async function (req, res) {
-
     const user = {
-        user_id: res.locals.user.user_id,
         username: req.body.username,
+        password: req.body.password,
         avatar_id: req.body.avatar,
         first_name: req.body.firstName,
         last_name: req.body.lastname,
         date_of_birth: req.body.dob,
         description: req.body.description,
-        password: req.body.password
     };
 
-    userDb.updateUserDetails(user);
+    await userDb.updateUserDetails(user);
 
-    res.redirect("/");
+    res.redirect("/"); 
 });
 
 
