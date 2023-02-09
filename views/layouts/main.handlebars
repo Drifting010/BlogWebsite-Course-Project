@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Group 2 final project</title>
-    <link rel="stylesheet" href="./app.css">
+    <link rel="stylesheet" href="/app.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa">
-    <script src="./formcheck.js"></script>
-    <script src="./article.js"></script>
+    <script src="/formcheck.js"></script>
+    <script src="/article.js"></script>
 </head>
 
 <body>
@@ -19,12 +19,12 @@
         <div class="grid-3 align-center">
         <p><img src="/images/{{user.avatar_id}}.png" height="50px"></p>
         <h3><a class="unlink" href="/">{{user.username}}</a></h3>
-        <p><a href="./logout">Logout</a></p>
+        <p><a href="/logout">Logout</a></p>
         </div>
         {{else}}
         <h2></h2>
         <p>{{authorised}}</p>
-        <a href="./login">Login</a>
+        <a href="/login">Login</a>
         {{/if}}
     </div>
     {{{body}}}

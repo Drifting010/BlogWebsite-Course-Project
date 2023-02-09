@@ -5,13 +5,13 @@ async function createComment(comment) {
     const db = await dbPromise;
 
     await db.run(SQL`
-    insert into comments (content, user_id, article_id)  values (${comment.content}, ${comment.user_id}, ${comment.article_id});`);
+    insert into comments (content, username, user_id, article_id)  values (${comment.content}, ${comment.username}, ${comment.user_id}, ${comment.article_id});`);
 }
 
-async function getComments() {
+async function getCommentsById(id) {
     const db = await dbPromise;
     const commentsArray = await db.all(SQL`
-    select * from comments`);
+    select * from comments where article_id = ${id}`);
 
     return commentsArray;
 }
@@ -19,5 +19,5 @@ async function getComments() {
 
 module.exports = {
     createComment,
-    getComments
+    getCommentsById
 };
