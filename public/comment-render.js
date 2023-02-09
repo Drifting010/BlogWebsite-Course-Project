@@ -27,18 +27,21 @@ window.addEventListener("load", async function (event) {
         const commentLayerOne = document.querySelectorAll("span.first_layer_comments"); // COMMENT1
 
         // COMMENT NESTING
-        for (let i = 0; i < commentLayerOne.length; i++) {
+        for (let i = 0; i < commentLayerOne.length; i++) { // first layer iteration
             let comment_id = commentLayerOne[i].id;
             let responseOne = await fetch(`/comments-all?comment_id=${comment_id}`);
             let commentLayerTwo = await responseOne.json();
 
+            // let buttonDeleteThree = document.createElement("button");
+            // buttonDeleteThree.innerText = "delete";
+
             // COMMENT1.appendChild(COMMENT2)
-            for (let j = 0; j < commentLayerTwo.length; j++) {
+            for (let j = 0; j < commentLayerTwo.length; j++) { // second layer iteration
                 let comment_id = commentLayerTwo[j].comment_id;
                 let reponseTwo = await fetch(`/comments-all?comment_id=${comment_id}`);
                 let commentLayerThree = await reponseTwo.json();
 
-                // Reply and Delete button
+                // BUTTON: Reply and Delete
                 let span = document.createElement("span");
                 const buttonReply = document.createElement("button");
                 buttonReply.innerText = "reply";
@@ -48,31 +51,38 @@ window.addEventListener("load", async function (event) {
                 span.appendChild(buttonDelete);
 
                 // COMMENT2.appendChild(COMMENT3)
+                // Layer Three comments for each layer two 
                 let ul_three = document.createElement("ul");
                 ul_three.style.listStyleType = "none"; // bullet remove
 
-                for (let k = 0; k < commentLayerThree.length; k++) {
+
+
+                for (let k = 0; k < commentLayerThree.length; k++) { // third layer iteration
+                    let buttonDeleteThree = document.createElement("button");
+                    buttonDeleteThree.innerText = "delete";
                     let li_three = document.createElement("li");
                     li_three.innerText = commentLayerThree[k].content;
+                    li_three.appendChild(buttonDeleteThree);
                     ul_three.appendChild(li_three);
                 }
 
+                // Layer Two comments for each layer one
                 let ul_Two = document.createElement("ul");
                 ul_Two.style.listStyleType = "none"; // bullet remove 
 
                 let li_two = document.createElement("li");
-                li_two.innerText = commentLayerTwo[j].content;
-                li_two.appendChild(span);
+                li_two.innerText = commentLayerTwo[j].content; // CONTENT: add content of each layer two comment
+                li_two.appendChild(span); // BUTTON: attach reply and delete buttons to each layer two comment
 
-                // Input div to reply layer two comments
+                // Functionality: reply to layer two comments
+                // reply div
                 let divSecondCommentReply = document.createElement("div");
                 divSecondCommentReply.style.display = "none";
-
+                // add event for reply button
                 buttonReply.addEventListener("click", function (event) {
                     divSecondCommentReply.style.display = "block";
                 });
 
-                // console.log(divSecondCommentReply);
                 divSecondCommentReply.innerHTML =
                     `<form action="/add-2nd-comment" method="POST" class="form">
                         <input type="hidden" name="parent_comment_id" value="${commentLayerTwo[j].comment_id}">
@@ -82,18 +92,15 @@ window.addEventListener("load", async function (event) {
                         </div>
                     </form>`;
 
+                li_two.appendChild(divSecondCommentReply); // add reply div to corresponding layer two comment
 
-                li_two.appendChild(divSecondCommentReply);
+                let divSecondComment = document.createElement("div"); // container: wrap the whole level two and level three
+                ul_Two.appendChild(li_two); // layer two comments
+                ul_Two.appendChild(ul_three); // layer three comments
+                divSecondComment.appendChild(ul_Two); // attach both layer two and layer three to the container
 
-                let divSecondComment = document.createElement("div");
-                ul_Two.appendChild(li_two);
-                ul_Two.appendChild(ul_three);
-                divSecondComment.appendChild(ul_Two);
-
-                divFirstComment[i].appendChild(divSecondComment);
-
+                divFirstComment[i].appendChild(divSecondComment); // attach second layer contianer to first layer container
             }
         }
     }
-
 });
