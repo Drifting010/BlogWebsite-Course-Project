@@ -3,15 +3,27 @@ window.addEventListener("load", async function (event) {
     // When click repy button, textarea appears
     const replyButtonArray = document.querySelectorAll(".replyButton");
 
-    const deleteButtonArray = document.querySelectorAll(".deleteButton");
+    const buttonDeleteOne = document.querySelectorAll(".deleteButton");
     const divFirstCommentReply = document.querySelectorAll("div.firstCommentReply");
 
     const divFirstComment = document.querySelectorAll("div.firstComment");
     // Reply to first layer comments
     for (let i = 0; i < replyButtonArray.length; i++) {
-
         replyButtonArray[i].addEventListener("click", function () {
             divFirstCommentReply[i].style.display = "block";
+        });
+    }
+
+    // Delete first layer comments
+    // comments id
+    const commentLayerOne = document.querySelectorAll("span.first_layer_comments");
+    // console.log(commentLayerOneId);
+    for (let i = 0; i < buttonDeleteOne.length; i++) {
+        let commentId = commentLayerOne[i].id;
+        console.log(commentId);
+        buttonDeleteOne[i].addEventListener("click", function () {
+            location.href = `/comments-delete?id=${commentId}`; // Backend → pass param to router 
+            buttonDeleteOne[i].remove(); // delete button
         });
     }
 
@@ -21,7 +33,7 @@ window.addEventListener("load", async function (event) {
 
 
     // FUNCTIONS
-    // NESTING AND REPLYING OF COMMENTS
+    // NESTING, REPLYING, and DELETEION of comments
     async function renderComments() {
 
         const commentLayerOne = document.querySelectorAll("span.first_layer_comments"); // COMMENT1
@@ -31,9 +43,6 @@ window.addEventListener("load", async function (event) {
             let comment_id = commentLayerOne[i].id;
             let responseOne = await fetch(`/comments-all?comment_id=${comment_id}`);
             let commentLayerTwo = await responseOne.json();
-
-            // let buttonDeleteThree = document.createElement("button");
-            // buttonDeleteThree.innerText = "delete";
 
             // COMMENT1.appendChild(COMMENT2)
             for (let j = 0; j < commentLayerTwo.length; j++) { // second layer iteration
@@ -59,7 +68,7 @@ window.addEventListener("load", async function (event) {
                     // button: delete
                     let buttonDeleteThree = document.createElement("button");
                     buttonDeleteThree.innerText = "delete";
-                    // add event to delete button for LAYER THREE
+                    // LAYER THREE: add event to delete button 
                     let id = commentLayerThree[k].comment_id;
                     buttonDeleteThree.addEventListener("click", function () {
                         location.href = `/comments-delete?id=${id}`; // Backend → pass param to router 
@@ -79,6 +88,7 @@ window.addEventListener("load", async function (event) {
                 let li_two = document.createElement("li");
                 li_two.innerText = commentLayerTwo[j].content; // CONTENT: add content of each layer two comment
 
+                // LAYER TWO: add event to delete button
                 let idTwo = commentLayerTwo[j].comment_id;
                 buttonDelete.addEventListener("click", function () {
                     location.href = `/comments-delete?id=${idTwo}`; // Backend → pass param to router 
