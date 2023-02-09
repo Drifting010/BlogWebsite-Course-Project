@@ -43,15 +43,20 @@ router.get("/comments-all", async function (req, res) {
 
 router.get("/comments-delete", async function (req, res) {
     const idOne = req.query.id; // comment_id; layer one comment
-    const commentsArrayTwo = await commentDb.getCommentsByParentId(idOne);
+    const comment = await commentDb.getCommentById(idOne);
+    const user = res.locals.user;
+    // users can only delete their own comments
+    if (comment.user_id === user.user_id) {
+        const commentsArrayTwo = await commentDb.getCommentsByParentId(idOne);
 
-    for (let i = 0; i < commentsArrayTwo.length; i++) { // layer two
-        let idTwo = commentsArrayTwo[i].comment_id; 
-        await commentDb.deleteCommentsByParentId(idTwo); // delete layer three
+        for (let i = 0; i < commentsArrayTwo.length; i++) { // layer two
+            let idTwo = commentsArrayTwo[i].comment_id;
+            await commentDb.deleteCommentsByParentId(idTwo); // delete layer three
+        }
+
+        await commentDb.deleteCommentsByParentId(idOne); // delete layer two
+        await commentDb.deleteCommentById(idOne); // delete layer one
     }
-
-    await commentDb.deleteCommentsByParentId(idOne); // delete layer two
-    await commentDb.deleteCommentById(idOne); // delete layer one
 
     res.redirect("back"); // direct back to the original page
 });
