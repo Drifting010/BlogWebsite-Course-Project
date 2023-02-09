@@ -40,7 +40,7 @@ async function createArticle(article) {
     const db = await dbPromise;
 
     await db.run(SQL`
-    insert into articles (title, content, user_id, username)  values (${article.title},${article.content}, ${article.user_id}, ${article.username});`);
+    insert into articles (title, content, image, user_id, username)  values (${article.title},${article.content}, ${article.image}, ${article.user_id}, ${article.username});`);
 }
 
 // ALL ARTICLES SORTING

@@ -3,6 +3,8 @@ const router = express.Router();
 
 const articleDb = require("../modules/article-dao.js");
 const commentDb = require("../modules/comment-dao.js");
+const upload = require("../middleware/multer-uploader.js");
+const fs = require("fs");
 
 
 router.get("/articles-all", async function (req, res) {
@@ -26,12 +28,18 @@ router.get("/articles-user", async function (req, res) {
 });
 
 // router.post("/publish", upload.single("coverPhoto"), async function (req, res) {
-router.post("/publish-article", async function (req, res) {
+router.post("/publish-article", upload.single("imageFile"), async function (req, res) {
     const user = res.locals.user;
+    const fileInfo = req.file;
+
+    const oldFileName = fileInfo.path;
+    const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
+    fs.renameSync(oldFileName, newFileName);
+
     const article = {
         title: req.body.title,
         content: req.body.content,
-        // image: req.file,
+        image: fileInfo.originalname,
         user_id: user.user_id,
         username: user.username
     };
@@ -42,6 +50,7 @@ router.post("/publish-article", async function (req, res) {
     res.locals.articles = articles;
     res.redirect("/articles-user");
 });
+
 
 router.get("/create-article", function (req, res) {
     res.render("create-article");
@@ -166,43 +175,6 @@ function makeArray(input) {
         return [input];
     }
 }
-//route for uploading image
 
-// Setup fs
-const fs = require("fs");
-
-// Setup body-parser
-router.use(express.urlencoded({ extended: false }));
-
-// Setup multer (files will temporarily be saved in the "temp" folder).
-const path = require("path");
-const multer = require("multer");
-const upload = multer({
-    dest: path.join(__dirname, "temp")
-});
-
-// Make the "public" folder available statically
-router.use(express.static(path.join(__dirname, "public")));
-
-
-// When we POST to /uploadImage, use Multer to process the "imageFile" upload.
-// Then, move the uploaded image to /public/uploadedFiles/NAME, where NAME is the
-// file's original name.
-// Finally, send the image and caption to the uploadDetails view for rendering.
-router.post("/uploadImage", upload.single("imageFile"), function (req, res) {
-
-    const fileInfo = req.file;
-
-    // Move the file somewhere more sensible
-    const oldFileName = fileInfo.path;
-    const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
-    fs.renameSync(oldFileName, newFileName);
-
-    // Get some information about the file and send it to the uploadDetails view for rendering.
-    res.locals.fileName = fileInfo.originalname;
-    res.locals.caption = req.body.caption;
-    res.render("create-article");
-
-});
 
 module.exports = router; 
