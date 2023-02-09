@@ -43,6 +43,32 @@ async function createArticle(article) {
     insert into articles (title, content, image, user_id, username)  values (${article.title},${article.content}, ${article.image}, ${article.user_id}, ${article.username});`);
 }
 
+async function updateArticleWithImage(article) {
+    const db = await dbPromise;
+
+    await db.run(SQL`
+        update articles
+        set title = ${article.title}, 
+        content = ${article.content},
+        image = ${article.image},
+        user_id = ${article.user_id},
+        username = ${article.username}
+        where article_id = ${article.article_id}`);
+}
+
+async function updateArticleWithoutImage(article) {
+    const db = await dbPromise;
+
+    await db.run(SQL`
+        update articles
+        set title = ${article.title}, 
+        content = ${article.content},
+        user_id = ${article.user_id},
+        username = ${article.username}
+        where article_id = ${article.article_id}`);
+}
+
+
 // ALL ARTICLES SORTING
 /**
  * retrieve articles ordered by its title from Database
@@ -157,6 +183,8 @@ module.exports = {
     createArticle,
     getArticleById,
     deleteArticleById,
+    updateArticleWithImage,
+    updateArticleWithoutImage,
     articlesByTitleZa,
     articlesByTitleAz,
     articlesByUsernameZa,
