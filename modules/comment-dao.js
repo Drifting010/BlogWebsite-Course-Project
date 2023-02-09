@@ -18,14 +18,14 @@ async function getCommentsById(article_id) {
     return commentsArray;
 }
 
-// // Select a specific comment by its id
-// async function getCommentById(comment_id) {
-//     const db = await dbPromise;
-//     const comment = await db.get(SQL`
-//         select * from comments where comment_id = ${comment_id}`);
+// Select a specific comment by its id
+async function getCommentById(comment_id) {
+    const db = await dbPromise;
+    const comment = await db.get(SQL`
+        select * from comments where comment_id = ${comment_id}`);
 
-//     return comment;
-// }
+    return comment;
+}
 
 // Select the deeper layer comments by parent comment id, and retrieve data from comments table in DB
 async function getCommentsByParentId(parent_comment_id) {
@@ -54,7 +54,7 @@ async function deleteCommentsByParentId(comment_id) {
 module.exports = {
     createComment,
     getCommentsById,
-    // getCommentById, // get specific single comment
+    getCommentById, // get specific single comment
     getCommentsByParentId,
     deleteCommentsByParentId,
     deleteCommentById
