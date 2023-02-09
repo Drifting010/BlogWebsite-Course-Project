@@ -68,7 +68,16 @@
     display: grid;
     grid-auto-rows: auto;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 50px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-auto-rows: auto;
+    grid-template-columns: 2fr 1fr;
     grid-gap: 20px;
+    margin:auto;
+    padding: 20px 20px;
 }
 /*****************************************************************/
 
