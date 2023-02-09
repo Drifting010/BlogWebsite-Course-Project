@@ -28,11 +28,12 @@
 
         <textarea name="content" id="article-text">
 
-
+<!-- Create uploading image button -->
         <div class="flex-col align-center">
-           <p>{{fileName}}</p>
-           <p><img src="uploadedFiles/{{fileName}}"></p>
-           <p><em>{{caption}}</em></p>
+
+                <object data="uploadedFiles/{{fileName}}" ></object>
+                <p>{{fileName}}</p>              
+                <p><em>{{caption}}</em></p>
         </div>
 
 
