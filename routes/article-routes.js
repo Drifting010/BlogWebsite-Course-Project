@@ -215,9 +215,11 @@ router.get("/articles-user-date-asc", async function (req, res) {
     res.render("user-articles");
 });
 
+
 router.get("/article/:article_id", async function (req, res) {
     const article = await articleDb.getArticleById(req.params.article_id);
     const comments = await commentDb.getCommentsById(req.params.article_id);
+    
     res.locals.article = article;
     res.locals.comments = comments;
     res.render("single-article");
