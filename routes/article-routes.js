@@ -3,6 +3,8 @@ const router = express.Router();
 
 const articleDb = require("../modules/article-dao.js");
 const commentDb = require("../modules/comment-dao.js");
+const upload = require("../middleware/multer-uploader.js");
+const fs = require("fs");
 
 router.get("/articles-all", async function (req, res) {
     const articlesAll = await articleDb.getArticles();
@@ -25,12 +27,18 @@ router.get("/articles-user", async function (req, res) {
 });
 
 // router.post("/publish", upload.single("coverPhoto"), async function (req, res) {
-router.post("/publish-article", async function (req, res) {
+router.post("/publish-article", upload.single("imageFile"), async function (req, res) {
     const user = res.locals.user;
+    const fileInfo = req.file;
+
+    const oldFileName = fileInfo.path;
+    const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
+    fs.renameSync(oldFileName, newFileName);
+
     const article = {
         title: req.body.title,
         content: req.body.content,
-        // image: req.file,
+        image: fileInfo.originalname,
         user_id: user.user_id,
         username: user.username
     };
@@ -41,6 +49,7 @@ router.post("/publish-article", async function (req, res) {
     res.locals.articles = articles;
     res.redirect("/articles-user");
 });
+
 
 router.get("/create-article", function (req, res) {
     res.render("create-article");
@@ -174,5 +183,6 @@ function makeArray(input) {
         return [input];
     }
 }
+
 
 module.exports = router; 
