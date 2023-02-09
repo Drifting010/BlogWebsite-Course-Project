@@ -55,11 +55,16 @@ window.addEventListener("load", async function (event) {
                 let ul_three = document.createElement("ul");
                 ul_three.style.listStyleType = "none"; // bullet remove
 
-
-
                 for (let k = 0; k < commentLayerThree.length; k++) { // third layer iteration
+                    // button: delete
                     let buttonDeleteThree = document.createElement("button");
                     buttonDeleteThree.innerText = "delete";
+                    // add event to delete button
+                    let id = commentLayerThree[i].comment_id;
+                    buttonDeleteThree.addEventListener("click", function(){
+                        location.href=`/comments-delete?id=${id}`; // Backend → pass param to router 
+                    });
+                    // content
                     let li_three = document.createElement("li");
                     li_three.innerText = commentLayerThree[k].content;
                     li_three.appendChild(buttonDeleteThree);
