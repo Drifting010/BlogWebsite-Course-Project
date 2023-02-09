@@ -8,13 +8,16 @@
 
         <h5> Written by <span class="author"> {{article.username}} </span> on {{article.created_datetime}} </h5>
         <input value="{{article.article_id}}" hidden>
-        <p>{{{article.content}}}</p>
 
         {{#if article.image}}
-        <img src="{{article.image}}" alt="">
+        <div class="flex-row justify-center">
+            <img src="/uploadedFiles/{{article.image}}" width="80%" alt="">
+        </div>
         {{/if}}
-    </div>
-
+        
+        <div class="article-text">
+            <p>{{{article.content}}}</p>
+        </div>
 
     <div>
         <h3>Add comments:</h3>
@@ -42,7 +45,6 @@
 
             {{!-- 2nd Layer Comments --}}
             <div style="display: none" class="firstCommentReply">
-                AAAA
                 <form action="/add-2nd-comment" method="POST" class="form">
                     <input type="hidden" name="parent_comment_id" value="{{this.comment_id}}">
                     <textarea name="secondComment"></textarea>
@@ -54,6 +56,5 @@
         </div>
         {{/each}}
     </div>
-
-</div>
+    </div>
 </div>

@@ -1,36 +1,38 @@
 <div class="container">
 
     <h1>Update account details</h1>
-
-    <form action="./updateaccount" method="POST" class = "form">
+    <form action="./updateaccount" method="POST" id="formUpdateAccount">
         <div class="flex-col mb">
             <label for="txtUsername">Username:</label>
-            <input type="text" name="username" id="txtUsername" value="{{user.username}}">
+            <input type="text" name="username" id="updatedTxtUsername" value="{{user.username}}">
+            <div id="updateUsernameCheck" style="display: inline"></div>
         </div>
 
         <div class="flex-row mb" id="avatar">
             <label for="avatar">Choose your avatar:</label>
             
  {{!-- Add logic to check the avatar user has currently selected --}}
-            <input type="radio" name="avatar" id="avatar" value="cat" checked>
+            <input type="hidden" class="currentAvatar" value="{{user.avatar_id}}">
+
+            <input type="radio" name="avatar" id="avatar" class="catAvatar" value="cat">
             <img src="\images\cat.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="dog">
+            <input type="radio" name="avatar" id="avatar" class="dogAvatar" value="dog">
             <img src="\images\dog.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="fox">
+            <input type="radio" name="avatar" id="avatar" class="foxAvatar" value="fox">
             <img src="\images\fox.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="gorilla">
+            <input type="radio" name="avatar" id="avatar" class="gorillaAvatar" value="gorilla">
             <img src="\images\gorilla.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="koala">
+            <input type="radio" name="avatar" id="avatar" class="koalaAvatar" value="koala">
             <img src="\images\koala.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="rabbit">
+            <input type="radio" name="avatar" id="avatar" class="rabbitAvatar" value="rabbit">
             <img src="\images\rabbit.png" height="60px">
 
-            <input type="radio" name="avatar" id="avatar" value="tiger">
+            <input type="radio" name="avatar" id="avatar" class="tigerAvatar" value="tigerAvatar">
             <img src="\images\tiger.png" height="60px">
         </div>
 
@@ -56,18 +58,18 @@
 
         <div class="flex-col mb">
             <label for="txtPassword">Password:</label>
-            <input type="password" name="password" id="txtPassword" placeholder="New Password">
+            <input type="password" name="password" id="updatedTxtPassword" placeholder="***********" value="">
+            {{!-- <input type="hidden" class="currentPassword" value="{{user.password}}"> --}}
         </div>
 
         <div class="flex-col mb">
             <label for="txtPasswordConfirm">Confirm password:</label>
-            <input type="password" name="passwordConfirm" id="txtPasswordConfirm" placeholder="Confirm Password">
-            <div id="pwdcheck" style="display: inline"></div>
+            <input type="password" name="passwordConfirm" id="updateTxtPasswordConfirm" placeholder="***********">
+            <div id="updatePwdCheck" style="display: inline"></div>
         </div>
 
-        {{!-- TODO when having errors, button is "unable" --}}
         <div class="flex-row justify-sb align-center">
-            <button type="submit">Update account</button>
+            <button type="submit" id="update-submit-button">Update account</button>
         </div>
     </form>
 

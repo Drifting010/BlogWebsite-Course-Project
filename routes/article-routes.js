@@ -3,6 +3,8 @@ const router = express.Router();
 
 const articleDb = require("../modules/article-dao.js");
 const commentDb = require("../modules/comment-dao.js");
+const upload = require("../middleware/multer-uploader.js");
+const fs = require("fs");
 
 router.get("/articles-all", async function (req, res) {
     const articlesAll = await articleDb.getArticles();
@@ -10,7 +12,6 @@ router.get("/articles-all", async function (req, res) {
 
     const commentsAll = await commentDb.getCommentsById();
     res.locals.comments = commentsAll;
-    // console.log(commentsAll);
 
     res.render("all-articles");
 });
@@ -24,13 +25,18 @@ router.get("/articles-user", async function (req, res) {
     res.render("user-articles");
 });
 
-// router.post("/publish", upload.single("coverPhoto"), async function (req, res) {
-router.post("/publish-article", async function (req, res) {
+router.post("/publish-article", upload.single("imageFile"), async function (req, res) {
     const user = res.locals.user;
+    const fileInfo = req.file;
+
+    const oldFileName = fileInfo.path;
+    const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
+    fs.renameSync(oldFileName, newFileName);
+
     const article = {
         title: req.body.title,
         content: req.body.content,
-        // image: req.file,
+        image: fileInfo.originalname,
         user_id: user.user_id,
         username: user.username
     };
@@ -42,20 +48,56 @@ router.post("/publish-article", async function (req, res) {
     res.redirect("/articles-user");
 });
 
+
 router.get("/create-article", function (req, res) {
     res.render("create-article");
 });
 
-// EDIT ARTICLEs
+// EDIT ARTICLE
 router.post("/article-edit", async function (req, res) {
     const article_id = req.body.article_id;
     const article = await articleDb.getArticleById(article_id);
-    // console.log(article);
-    // TODO: populate article in WYSIWYG editor
+
+    res.locals.article = article;
+    res.render("edit-article");
+});
+
+router.post("/publish-changes", upload.single("imageFile"), async function (req, res) {
+    const user = res.locals.user;
+    let article;
+
+    if (req.file) {
+        const fileInfo = req.file;
+
+        const oldFileName = fileInfo.path;
+        const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
+        fs.renameSync(oldFileName, newFileName);
+
+        article = {
+            title: req.body.title,
+            content: req.body.content,
+            image: fileInfo.originalname,
+            user_id: user.user_id,
+            username: user.username,
+            article_id: req.body.article_id
+        };
+        articleDb.updateArticleWithImage(article);
+    } else {
+        article = {
+            title: req.body.title,
+            content: req.body.content,
+            user_id: user.user_id,
+            username: user.username,
+            article_id: req.body.article_id
+        };
+        articleDb.updateArticleWithoutImage(article);
+    }
+
+    res.redirect(`/article/${article.article_id}`);
 
 });
 
-// DELETE ARTICLEs
+// DELETE ARTICLE
 router.post("/article-delete", async function (req, res) {
     const article_id = req.body.article_id;
     await articleDb.deleteArticleById(article_id);
@@ -157,7 +199,6 @@ router.get("/articles-user-date-asc", async function (req, res) {
 });
 
 
-// DISPLAY: Articles and Comments
 router.get("/article/:article_id", async function (req, res) {
     const article = await articleDb.getArticleById(req.params.article_id);
     const comments = await commentDb.getCommentsById(req.params.article_id);
@@ -177,5 +218,6 @@ function makeArray(input) {
         return [input];
     }
 }
+
 
 module.exports = router; 
