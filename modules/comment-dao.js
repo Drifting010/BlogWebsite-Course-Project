@@ -18,7 +18,7 @@ async function getCommentsById(article_id) {
     return commentsArray;
 }
 
-// Select a specific comment by its id
+// Retrieve a specific comment by its id
 async function getCommentById(comment_id) {
     const db = await dbPromise;
     const comment = await db.get(SQL`
@@ -36,7 +36,7 @@ async function getCommentsByParentId(parent_comment_id) {
     return commentsArray;
 }
 
-async function deleteCommentById(id){
+async function deleteCommentById(id) {
     const db = await dbPromise;
 
     await db.run(SQL`

@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const commentDb = require("../modules/comment-dao.js");
+const articleDb = require("../modules/article-dao.js");
+const userDb = require("../modules/user-dao.js");
 
 router.post("/add-comment", async function (req, res) {
     const user = res.locals.user;
@@ -42,11 +44,36 @@ router.get("/comments-all", async function (req, res) {
 
 
 router.get("/comments-delete", async function (req, res) {
-    const idOne = req.query.id; // comment_id; layer one comment
+    const userCurrent = res.locals.user;
+
+    // Preparation:users can only delete their own comments
+    const idOne = req.query.id; // comment_id; Assumption: layer one comment
     const comment = await commentDb.getCommentById(idOne);
-    const user = res.locals.user;
-    // users can only delete their own comments
-    if (comment.user_id === user.user_id) {
+    // console.log(comment.parent_comment_id);
+    const commentOwner = comment.user_id;
+
+    // Preparation:article owners can delete all comments on their articles
+    let article_id = null;
+    const parentCommentIdTwo = comment.parent_comment_id; // Assumption: layer three
+    if (parentCommentIdTwo !== null) { // Existence check:layer two exists
+        const parentCommentTwo = await commentDb.getCommentById(parentCommentIdTwo);
+        const parentCommentIdOne = parentCommentTwo.parent_comment_id;
+        if (parentCommentIdOne !== null) { // Existence check:layer one exists
+            const parentCommentOne = await commentDb.getCommentById(parentCommentIdOne);
+            article_id = parentCommentOne.article_id;
+        } else {
+            article_id = parentCommentTwo.article_id;
+        }
+    } else {
+        article_id = comment.article_id;
+    }
+
+    const article = await articleDb.getArticleById(article_id);
+    articleOwner = await userDb.retrieveUserById(article.user_id);
+
+
+    // Delete Comments  
+    if (commentOwner === userCurrent.user_id || articleOwner.user_id === userCurrent.user_id) {
         const commentsArrayTwo = await commentDb.getCommentsByParentId(idOne);
 
         for (let i = 0; i < commentsArrayTwo.length; i++) { // layer two
