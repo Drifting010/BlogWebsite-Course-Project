@@ -60,9 +60,9 @@ window.addEventListener("load", async function (event) {
                     let buttonDeleteThree = document.createElement("button");
                     buttonDeleteThree.innerText = "delete";
                     // add event to delete button for LAYER THREE
-                    let id = commentLayerThree[i].comment_id;
-                    buttonDeleteThree.addEventListener("click", function(){
-                        location.href=`/comments-delete?id=${id}`; // Backend → pass param to router 
+                    let id = commentLayerThree[k].comment_id;
+                    buttonDeleteThree.addEventListener("click", function () {
+                        location.href = `/comments-delete?id=${id}`; // Backend → pass param to router 
                         buttonDeleteThree.remove(); // delete button
                     });
                     // content
@@ -78,6 +78,13 @@ window.addEventListener("load", async function (event) {
 
                 let li_two = document.createElement("li");
                 li_two.innerText = commentLayerTwo[j].content; // CONTENT: add content of each layer two comment
+
+                let idTwo = commentLayerTwo[j].comment_id;
+                buttonDelete.addEventListener("click", function () {
+                    location.href = `/comments-delete?id=${idTwo}`; // Backend → pass param to router 
+                    buttonDelete.remove(); // delete button
+                });
+
                 li_two.appendChild(span); // BUTTON: attach reply and delete buttons to each layer two comment
 
                 // Functionality: reply to layer two comments
