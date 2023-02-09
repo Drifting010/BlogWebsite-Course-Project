@@ -59,10 +59,11 @@ window.addEventListener("load", async function (event) {
                     // button: delete
                     let buttonDeleteThree = document.createElement("button");
                     buttonDeleteThree.innerText = "delete";
-                    // add event to delete button
+                    // add event to delete button for LAYER THREE
                     let id = commentLayerThree[i].comment_id;
                     buttonDeleteThree.addEventListener("click", function(){
                         location.href=`/comments-delete?id=${id}`; // Backend → pass param to router 
+                        buttonDeleteThree.remove(); // delete button
                     });
                     // content
                     let li_three = document.createElement("li");
