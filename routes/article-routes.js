@@ -27,20 +27,36 @@ router.get("/articles-user", async function (req, res) {
 
 router.post("/publish-article", upload.single("imageFile"), async function (req, res) {
     const user = res.locals.user;
-    const fileInfo = req.file;
 
-    const oldFileName = fileInfo.path;
-    const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
-    fs.renameSync(oldFileName, newFileName);
+    if (req.file) {
+        const fileInfo = req.file;
+        let article;
+        const oldFileName = fileInfo.path;
+        const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
+        fs.renameSync(oldFileName, newFileName);
 
-    const article = {
-        title: req.body.title,
-        content: req.body.content,
-        image: fileInfo.originalname,
-        user_id: user.user_id,
-        username: user.username
-    };
-    articleDb.createArticle(article);
+        article = {
+            title: req.body.title,
+            content: req.body.content,
+            image: fileInfo.originalname,
+            user_id: user.user_id,
+            username: user.username
+        };
+
+        articleDb.createArticle(article);
+    } else {
+
+        article = {
+            title: req.body.title,
+            content: req.body.content,
+            user_id: user.user_id,
+            username: user.username
+        };
+
+        articleDb.createArticleWithoutImage(article);
+    }
+
+    
 
     const articles = await articleDb.getArticlesByUser(user);
 
