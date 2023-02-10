@@ -126,4 +126,21 @@ window.addEventListener("load", async function (event) {
             }
         }
     }
+
+    // When click "Hide all" button, all comments are hidden and other way around
+    const hideBtn = document.querySelector(".hideViewBtn");
+    const commentsDiv = document.querySelector("#commentsDiv");
+    let viewFlag = true; //when loading page, the comments show
+    
+    hideBtn.addEventListener("click", function () {
+        if(viewFlag) {
+            commentsDiv.style.display = "none";
+            hideBtn.innerHTML = "View all";
+            viewFlag = false;
+        } else {
+            commentsDiv.style.display = "block";
+            hideBtn.innerHTML = "Hide all";
+            viewFlag = true;
+        }
+    });
 });
