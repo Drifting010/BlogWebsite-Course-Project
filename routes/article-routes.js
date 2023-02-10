@@ -240,6 +240,8 @@ function makeArray(input) {
 router.get("/likeStatus", async function (req, res) {
     const article_id = req.query.id;
     const user = res.locals.user;
+    
+    if (user) {
     const user_id = user.user_id;
     let likeStatus = await articleDb.checkLike(article_id, user_id);
 
@@ -256,13 +258,15 @@ router.get("/likeStatus", async function (req, res) {
     }
     console.log(newLikeStatus)
     res.json(newLikeStatus);
-
+    }
 });
 
 
 router.get("/likeStatusOnLoad", async function (req, res) {
     const article_id = req.query.id;
     const user = res.locals.user;
+
+    if(user) {
     const user_id = user.user_id;
     let likeStatus = await articleDb.checkLike(article_id, user_id);
 
@@ -271,7 +275,7 @@ router.get("/likeStatusOnLoad", async function (req, res) {
     }
 
     res.json(likeStatus);
-   
+}
 });
 
 
