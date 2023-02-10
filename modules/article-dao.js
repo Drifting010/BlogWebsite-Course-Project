@@ -177,6 +177,26 @@ async function userArticlesByDateAsc(user){
     return articles;
 }
 
+async function checkLike(article_id, user_id){
+    const db = await dbPromise;
+    const likeStatus = await db.get(SQL`
+        select * from likedarticles where user_id = ${user_id} and article_id = ${article_id}`);
+    return likeStatus;
+}
+
+async function likeArticle(article_id, user_id){
+    const db = await dbPromise;
+    await db.run(SQL`
+        insert into likedarticles (user_id, article_id) values (${user_id}, ${article_id})`);
+}
+
+async function unlikeArticle(article_id, user_id){
+    const db = await dbPromise;
+    await db.run(SQL`
+        delete from likedarticles where user_id = ${user_id} and article_id = ${article_id}`);
+}
+
+
 module.exports = {
     getArticles,
     getArticlesByUser,
@@ -196,5 +216,8 @@ module.exports = {
     userArticlesByUsernameZa,
     userArticlesByUsernameAz,
     userArticlesByDateDesc,
-    userArticlesByDateAsc
+    userArticlesByDateAsc, 
+    checkLike,
+    likeArticle,
+    unlikeArticle
 };

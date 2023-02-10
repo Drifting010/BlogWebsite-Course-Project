@@ -22,7 +22,14 @@
     <div>
         {{#each articles}}
         <div class="article">
+
+            <div class="flex-row align-center justify-sb">
             <h2><a class="unlink" href="/article/{{this.article_id}}">{{this.title}}</a></h2>
+            <div class="articleLike" id="{{this.article_id}}">
+                <img src="./images/thumbup1.jpg" class="likeButton{{this.article_id}}" width="40px">
+            </div>
+            </div>
+            
             <h6> Written by <span class="author"> {{this.username}} </span> on {{this.created_datetime}} </h6>
             <input value="{{this.article_id}}" hidden>
 
