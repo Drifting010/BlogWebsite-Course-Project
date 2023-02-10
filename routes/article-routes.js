@@ -28,23 +28,40 @@ router.get("/articles-user", async function (req, res) {
 router.post("/publish-article", upload.single("imageFile"), async function (req, res) {
     const user = res.locals.user;
     const fileInfo = req.file;
+ 
+    if (fileInfo) {
+        const oldFileName = fileInfo.path;
+        const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
+        fs.renameSync(oldFileName, newFileName);
+    
+        const article = {
+            title: req.body.title,
+            content: req.body.content,
+            image: fileInfo.originalname,
+            user_id: user.user_id,
+            username: user.username
+        };
+        articleDb.createArticle(article);
+    
+        const articles = await articleDb.getArticlesByUser(user);
+    
+        res.locals.articles = articles;
 
-    const oldFileName = fileInfo.path;
-    const newFileName = `./public/uploadedFiles/${fileInfo.originalname}`;
-    fs.renameSync(oldFileName, newFileName);
+    } else {
+        const article = {
+            title: req.body.title,
+            content: req.body.content,
+            user_id: user.user_id,
+            username: user.username
+        };
+        articleDb.createArticle(article);
+    
+        const articles = await articleDb.getArticlesByUser(user);
+    
+        res.locals.articles = articles;
+    
+    }
 
-    const article = {
-        title: req.body.title,
-        content: req.body.content,
-        image: fileInfo.originalname,
-        user_id: user.user_id,
-        username: user.username
-    };
-    articleDb.createArticle(article);
-
-    const articles = await articleDb.getArticlesByUser(user);
-
-    res.locals.articles = articles;
     res.redirect("/articles-user");
 });
 

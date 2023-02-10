@@ -93,17 +93,33 @@ router.get("/updateAccount", function (req, res) {
 });
 
 router.post("/updateaccount", async function (req, res) {
-    const user = {
-        username: req.body.username,
-        password: req.body.password,
-        avatar_id: req.body.avatar,
-        first_name: req.body.firstName,
-        last_name: req.body.lastname,
-        date_of_birth: req.body.dob,
-        description: req.body.description,
-    };
+    const updatePassword = req.body.password;
 
-    await userDb.updateUserDetails(user);
+    if (updatePassword) {
+        const user = {
+            username: req.body.username,
+            password: updatePassword,
+            avatar_id: req.body.avatar,
+            first_name: req.body.firstName,
+            last_name: req.body.lastname,
+            date_of_birth: req.body.dob,
+            description: req.body.description,
+        };
+    
+        await userDb.updateUserDetails(user);
+
+    } else {
+        const user = {
+            username: req.body.username,
+            avatar_id: req.body.avatar,
+            first_name: req.body.firstName,
+            last_name: req.body.lastname,
+            date_of_birth: req.body.dob,
+            description: req.body.description,
+        };
+    
+        await userDb.updateUserDetails(user);
+    }
 
     res.redirect("/"); 
 });
