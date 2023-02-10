@@ -22,6 +22,7 @@ router.get("/articles-user", async function (req, res) {
     const articlesUser = await articleDb.getArticlesByUser(user);
 
     res.locals.articles = articlesUser;
+    res.locals.user = user;
     res.render("user-articles");
 });
 
@@ -218,6 +219,43 @@ function makeArray(input) {
         return [input];
     }
 }
+
+router.get("/likeStatus", async function (req, res) {
+    const article_id = req.query.id;
+    const user = res.locals.user;
+    const user_id = user.user_id;
+    let likeStatus = await articleDb.checkLike(article_id, user_id);
+
+    if(!likeStatus) {
+        await articleDb.likeArticle(article_id, user_id);
+    } else {
+        await articleDb.unlikeArticle(article_id, user_id);
+    }
+
+    let newLikeStatus = await articleDb.checkLike(article_id, user_id);
+
+    if (newLikeStatus === undefined) {
+        newLikeStatus = {};
+    }
+    console.log(newLikeStatus)
+    res.json(newLikeStatus);
+
+});
+
+
+router.get("/likeStatusOnLoad", async function (req, res) {
+    const article_id = req.query.id;
+    const user = res.locals.user;
+    const user_id = user.user_id;
+    let likeStatus = await articleDb.checkLike(article_id, user_id);
+
+    if(!likeStatus) {
+        likeStatus = {};
+    }
+
+    res.json(likeStatus);
+   
+});
 
 
 module.exports = router; 
