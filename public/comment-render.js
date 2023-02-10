@@ -20,10 +20,24 @@ window.addEventListener("load", async function (event) {
     // console.log(commentLayerOneId);
     for (let i = 0; i < buttonDeleteOne.length; i++) {
         let commentId = commentLayerOne[i].id;
-        console.log(commentId);
         buttonDeleteOne[i].addEventListener("click", function () {
             location.href = `/comments-delete?id=${commentId}`; // Backend → pass param to router 
             buttonDeleteOne[i].remove(); // delete button
+        });
+    }
+
+    // Upvote first layer comments
+    const upvoteButtonArray = document.querySelectorAll("button.upvoteButton");
+    for (let i = 0; i < upvoteButtonArray.length; i++) {
+        upvoteButtonArray[i].addEventListener("click", function () {
+            upvoteButtonArray[i].classList.toggle("upvote");
+        });
+    }
+    // Downvote first layer comments
+    const downvoteButtonArray = document.querySelectorAll("button.downvoteButton");
+    for (let i = 0; i < downvoteButtonArray.length; i++) {
+        downvoteButtonArray[i].addEventListener("click", function () {
+            downvoteButtonArray[i].classList.toggle("downvote");
         });
     }
 
@@ -59,6 +73,24 @@ window.addEventListener("load", async function (event) {
                 span.appendChild(buttonReply);
                 span.appendChild(buttonDelete);
 
+                // BUTTON: Upvote and Downvote - Layer Two
+                // upvote
+                let buttonUpvote = document.createElement("button");
+                buttonUpvote.innerText = "upvote";
+                buttonUpvote.addEventListener("click", async function () {
+                    buttonUpvote.classList.toggle("upvote");
+                });
+                // downvote
+                let buttonDownvote = document.createElement("button");
+                buttonDownvote.innerText = "downvote";
+                buttonDownvote.addEventListener("click", async function (event) {
+                    buttonDownvote.classList.toggle("downvote");
+                });
+                // Second Layer Attach
+                span.appendChild(buttonUpvote);
+                span.appendChild(buttonDownvote);
+
+
                 // COMMENT2.appendChild(COMMENT3)
                 // Layer Three comments for each layer two 
                 let ul_three = document.createElement("ul");
@@ -78,6 +110,23 @@ window.addEventListener("load", async function (event) {
                     let li_three = document.createElement("li");
                     li_three.innerText = commentLayerThree[k].content;
                     li_three.appendChild(buttonDeleteThree);
+                    // BUTTON: Upvote and Downvote - Layer Three
+                    // upvote
+                    let buttonUpvoteThree = document.createElement("button");
+                    buttonUpvoteThree.innerText = "upvote";
+                    buttonUpvoteThree.addEventListener("click", async function () {
+                        buttonUpvoteThree.classList.toggle("upvote");
+                    });
+                    // downvote
+                    let buttonDownvoteThree = document.createElement("button");
+                    buttonDownvoteThree.innerText = "downvote";
+                    buttonDownvoteThree.addEventListener("click", async function (event) {
+                        buttonDownvoteThree.classList.toggle("downvote");
+                    });
+                    // Third Layer Attach
+                    li_three.appendChild(buttonUpvoteThree);
+                    li_three.appendChild(buttonDownvoteThree);
+
                     ul_three.appendChild(li_three);
                 }
 

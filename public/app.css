@@ -48,6 +48,16 @@ h5, h6 {
     text-decoration: none;
 }
 
+.upvote {
+    background-color: green;
+    color: white;
+}
+
+.downvote {
+    background-color:red;
+    color: white;
+}
+
 /*****************************************************************/
 
 
